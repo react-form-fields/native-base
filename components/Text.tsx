@@ -1,84 +1,81 @@
-import FieldCoreBase, { IPropsFieldBase, IStateFieldBase } from '@react-form-fields/core/components/FieldCoreBase';
 import { Icon, Input, Item } from 'native-base';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextInput, TextInputProperties } from 'react-native';
 
-interface IState extends IStateFieldBase {
-  styles: { item: any, input: any };
-}
+import { theme } from '../../theme';
+import FieldBase, { PropsBase } from './Base';
+import Wrapper from './Wrapper';
 
-interface IProps extends IPropsFieldBase {
-  value: any;
-  onChange: (value: any) => void;
-  type: string;
+interface IProps extends PropsBase<TextInputProperties, 'onChange'> {
+  value: string | number;
+  onChange: (value: string) => void;
   next: () => any;
-  styles?: { item?: any, input?: any };
 }
 
-const keyboardTypes: any = {
-  text: 'default',
-  email: 'email-address',
-  number: 'numeric',
-  phone: 'phone-pad',
-  zipcode: 'numeric',
-  document: 'default'
-};
-
-export default class FieldText extends FieldCoreBase<IProps, IState> {
-  private input: Input;
-
-  static getDerivedStateFromProps(nextProps: IProps, currentState: IState): IState {
-    return {
-      ...currentState,
-      ...FieldCoreBase.getDerivedStateFromProps(nextProps, currentState),
-      styles: {
-        item: (nextProps.styles || {}).item || {},
-        input: (nextProps.styles || {}).input || {}
-      }
-    }
-  }
+export default class FieldText extends FieldBase<IProps> {
+  private input: { _root: TextInput };
+  static defaultProps: Partial<IProps> = {
+    styles: {}
+  };
 
   get itemStyle() {
-    return StyleSheet.flatten([
-      this.state.styles.item,
-      this.errorMessage ? { borderColor: 'red' } : null
-    ]);
+    const { styles } = this.props;
+
+    return [
+      styles.bodyInner,
+      ...(this.errorMessage ? [innerStyles.errorItem, styles.errorItem] : [])
+    ];
   }
 
-  onChange = (event: any) => {
-    const value = this.mask.clean(event.target ? event.target.value : event);
+  setRef = (input: any) => {
+    this.input = input;
+  }
 
+  setFocus = () => {
+    this.input._root.focus();
+  }
+
+  onChange = (value: string) => {
     this.setState({ touched: true });
-    this.props.onChange(value);
+    this.props.onChange(this.mask.clean(value));
   }
 
-  public setFocus = (): void => {
-    if (!this.input) return;
-    (this.input as any)._root.focus();
+  handleSubmitEditing = () => {
+    this.goNext();
   }
 
   render() {
-    const { styles } = this.state;
-    const { type, next, value, } = this.props;
+    const { label, icon, next, value, styles } = this.props;
 
     return (
       <React.Fragment>
         {super.render()}
 
-        <Item style={this.itemStyle} error={!!this.errorMessage}>
-          <Input
-            ref={i => this.input = i}
-            value={(value || '').toString()}
-            onChangeText={this.onChange}
-            keyboardType={keyboardTypes[type] || keyboardTypes.text}
-            secureTextEntry={type === 'password' ? true : false}
-            style={styles.input}
-            returnKeyType={next ? 'next' : 'default'}
-            onSubmitEditing={() => next()}
-          />
-          {!!this.errorMessage && <Icon name='close-circle' />}
-        </Item>
+        <Wrapper label={label} icon={icon} error={this.errorMessage} styles={styles}>
+          <Item style={this.itemStyle} error={!!this.errorMessage}>
+            <Input
+              ref={this.setRef}
+              value={this.mask.apply((value || '').toString())}
+              onChangeText={this.onChange}
+              style={[innerStyles.input, styles.input]}
+              returnKeyType={next ? 'next' : 'default'}
+              onSubmitEditing={this.handleSubmitEditing}
+            />
+            {!!this.errorMessage && <Icon name='close-circle' />}
+          </Item>
+        </Wrapper>
       </React.Fragment>
     );
   }
 }
+
+const innerStyles = StyleSheet.create({
+  input: {
+    height: 41,
+    lineHeight: 20,
+    paddingLeft: 0
+  },
+  errorItem: {
+    borderColor: theme.inputErrorBorderColor
+  }
+});
