@@ -8,7 +8,7 @@ declare module '@react-form-fields/core/config' {
   interface IConfig {
     iconType?: NativeBase.Icon['type'];
     date?: {
-      locale?: string;
+      locale?: any;
       formats?: {
         date?: string;
         time?: string;
