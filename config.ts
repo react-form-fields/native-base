@@ -1,13 +1,19 @@
-import * as coreConfig from '@react-form-fields/core/config';
+import '@react-form-fields/core/config';
 
-export interface IConfig extends coreConfig.IConfig {
-  dateLocale?: string;
-}
+import { NativeBase } from 'native-base';
 
-export function getConfig(): IConfig {
-  return coreConfig.getConfig() || {};
-}
+export * from '@react-form-fields/core/config';
 
-export function setConfig(config: IConfig) {
-  coreConfig.setConfig(config);
+declare module '@react-form-fields/core/config' {
+  interface IConfig {
+    iconType?: NativeBase.Icon['type'];
+    date?: {
+      locale?: string;
+      formats?: {
+        date?: string;
+        time?: string;
+        dateTime?: string;
+      }
+    }
+  }
 }

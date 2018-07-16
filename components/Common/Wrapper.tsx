@@ -1,8 +1,9 @@
+import { getConfig } from '@react-form-fields/core/config';
 import { Body, Icon, Left, ListItem, Text, View } from 'native-base';
+import variables from 'native-base/src/theme/variables/platform';
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { GestureResponderEvent, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-import { theme } from '../../theme';
 
 export interface IWrapperProps {
   label?: string;
@@ -33,12 +34,47 @@ export default class Wrapper extends React.PureComponent<IWrapperProps & {
     styles: {}
   };
 
+  static contextTypes = {
+    theme: PropTypes.object,
+    foregroundColor: PropTypes.string,
+  };
+
+  static propTypes = {
+    theme: PropTypes.object,
+    foregroundColor: PropTypes.string,
+  };
+
+  static childContextTypes = {
+    theme: PropTypes.object,
+    foregroundColor: PropTypes.string,
+  };
+
+  getChildContext() {
+    return {
+      theme: this.context.theme,
+    };
+  }
+
+  getContextForegroundColor() {
+    return this.context.foregroundColor;
+  }
+
+  getThemeVariables(): typeof variables {
+    return this.context.theme
+      ? this.context.theme["@@shoutem.theme/themeStyle"].variables
+      : {};
+  }
+
+  get errorStyle() {
+    return { color: this.getThemeVariables().inputErrorBorderColor };
+  }
+
   get labelStyle() {
     const { styles, error } = this.props;
 
     return [
       styles.label,
-      ...(error ? [innerStyles.errorLabel, styles.errorLabel] : [])
+      ...(error ? [this.errorStyle, styles.errorLabel] : [])
     ];
   }
 
@@ -48,7 +84,7 @@ export default class Wrapper extends React.PureComponent<IWrapperProps & {
     return [
       innerStyles.icon,
       styles.icon,
-      ...(error ? [innerStyles.errorIcon, styles.errorIcon] : [])
+      ...(error ? [this.errorStyle, styles.errorIcon] : [])
     ];
   }
 
@@ -59,7 +95,7 @@ export default class Wrapper extends React.PureComponent<IWrapperProps & {
       <ListItem style={[innerStyles.container, styles.container]} button={!!onPress} onPress={onPress}>
         {!!icon &&
           <Left style={[innerStyles.iconWrapper, styles.iconWrapper]}>
-            {icon !== 'empty' && <Icon name={icon} style={this.iconStyle} />}
+            {icon !== 'empty' && <Icon name={icon} style={this.iconStyle} type={getConfig().iconType} />}
           </Left>
         }
         <Body>
@@ -68,7 +104,7 @@ export default class Wrapper extends React.PureComponent<IWrapperProps & {
               <Text note style={this.labelStyle}>{label}</Text>
             }
             {children}
-            <Text note style={[innerStyles.errorMessage, styles.errorMessage]}>{error}</Text>
+            <Text note style={[this.errorStyle, styles.errorMessage]}>{error}</Text>
           </View>
         </Body>
       </ListItem >
@@ -85,15 +121,6 @@ const innerStyles = StyleSheet.create({
   },
   body: {
     marginLeft: 12
-  },
-  errorLabel: {
-    color: theme.inputErrorBorderColor
-  },
-  errorMessage: {
-    color: theme.inputErrorBorderColor
-  },
-  errorIcon: {
-    color: theme.inputErrorBorderColor
   },
   iconWrapper: {
     maxWidth: 45,

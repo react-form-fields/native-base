@@ -4,12 +4,13 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import DateTimePicker, { DateTimePickerProps } from 'react-native-modal-datetime-picker';
 
-import { dateFormatter } from '../../formatters/date';
-import { theme } from '../../theme';
-import FieldBase, { PropsBase } from './Base';
-import Wrapper from './Wrapper';
+import { dateFormat } from '../helpers/dateFormat';
+import FieldBase, { PropsBase } from './Common/Base';
+import Wrapper from './Common/Wrapper';
 
 interface IState extends IStateFieldBase {
+  currentValue?: Date;
+  formattedValue?: string;
   showDatePicker: boolean;
 }
 
@@ -23,6 +24,24 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
   static defaultProps: Partial<IProps> = {
     styles: {}
   };
+
+  static getDerivedStateFromProps(nextProps: IProps, currentState: IState): IState {
+    let currentValue = currentState.currentValue;
+    let formattedValue = currentState.formattedValue;
+
+    if (currentValue !== nextProps.value) {
+      currentValue = nextProps.value;
+      formattedValue = dateFormat(nextProps.value, nextProps.mode || 'date');
+    }
+
+    return {
+      ...currentState,
+      ...super.getDerivedStateFromProps(nextProps, currentState),
+      currentValue,
+      formattedValue
+    }
+
+  }
 
   shouldComponentUpdate(nextProps: Readonly<IProps>, nextState: Readonly<IState>, nextContext: any): boolean {
     if (this.state.showDatePicker && nextState.showDatePicker) {
@@ -38,19 +57,10 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
 
     return [
       styles.bodyInner,
-      ...(this.errorMessage ? [innerStyles.errorItem, styles.errorItem] : [])
+      ...(this.errorMessage ? [{
+        borderColor: this.getThemeVariables().inputErrorBorderColor
+      }, styles.errorItem] : [])
     ];
-  }
-
-  get defaultFormat() {
-    switch (this.props.mode) {
-      case 'date':
-        return 'L';
-      case 'time':
-        return 'LT';
-      default:
-        return 'L LT';
-    }
   }
 
   setFocus = () => {
@@ -75,7 +85,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
   }
 
   render() {
-    const { showDatePicker } = this.state;
+    const { showDatePicker, formattedValue } = this.state;
     const { label, icon, value, styles, format, mode, ...datepickerProps } = this.props;
 
     return (
@@ -87,7 +97,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
             <Item style={this.itemStyle} error={!!this.errorMessage}>
               <Input
                 disabled
-                value={value ? dateFormatter.format(value, format || this.defaultFormat) : null}
+                value={formattedValue}
                 style={[innerStyles.input, styles.input]}
               />
               {!!this.errorMessage && <Icon name='close-circle' />}
@@ -115,8 +125,5 @@ const innerStyles = StyleSheet.create({
     height: 41,
     lineHeight: 20,
     paddingLeft: 0
-  },
-  errorItem: {
-    borderColor: theme.inputErrorBorderColor
   }
 });

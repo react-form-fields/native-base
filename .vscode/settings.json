@@ -18,6 +18,7 @@
     "mask/**/*.d.ts": true,
     "validator/**/*.d.ts": true,
     "interfaces/**/*.d.ts": true,
+    "helpers/**/*.d.ts": true,
     "*.d.ts": true,
     "**/*.map": {
       "when": "$(basename)"

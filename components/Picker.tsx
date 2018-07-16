@@ -2,9 +2,8 @@ import { Body, Button, Header, Icon, Left, NativeBase, Picker, Right, Title, Vie
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { theme } from '../../theme';
-import FieldBase, { PropsBase } from './Base';
-import Wrapper from './Wrapper';
+import FieldBase, { PropsBase } from './Common/Base';
+import Wrapper from './Common/Wrapper';
 
 interface IProps extends PropsBase<NativeBase.Picker, 'onValueChange' | 'selectedValue'> {
   label?: string;
@@ -30,9 +29,14 @@ export default class FieldPicker extends FieldBase<IProps> {
     const { styles } = this.props;
 
     return [
-      innerStyles.pickerContainer,
+      innerStyles.pickerContainer, {
+        borderWidth: this.getThemeVariables().borderWidth * 2,
+        borderColor: this.getThemeVariables().inputBorderColor,
+      },
       styles.pickerContainer,
-      ...(this.errorMessage ? [innerStyles.errorItem, styles.errorItem] : [])
+      ...(this.errorMessage ? [{
+        borderColor: this.getThemeVariables().inputErrorBorderColor
+      }, styles.errorItem] : [])
     ];
   }
 
@@ -46,7 +50,9 @@ export default class FieldPicker extends FieldBase<IProps> {
         <Wrapper label={label} icon={icon} error={this.errorMessage} styles={styles}>
           <View style={this.pickerContainerStyle}>
             <Picker
-              style={StyleSheet.flatten([innerStyles.picker, styles.picker])}
+              style={StyleSheet.flatten([innerStyles.picker, {
+                width: this.getThemeVariables().deviceWidth - 20
+              }, styles.picker])}
               iosHeader={label}
               prompt={label}
               selectedValue={value}
@@ -82,16 +88,13 @@ export default class FieldPicker extends FieldBase<IProps> {
 
 const innerStyles = StyleSheet.create({
   pickerContainer: {
-    borderWidth: theme.borderWidth * 2,
     borderTopWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    borderColor: theme.inputBorderColor,
     flex: 1,
     alignItems: 'stretch'
   },
   picker: {
-    width: theme.deviceWidth - 20,
     paddingLeft: 0
   },
   pickerTextStyle: {
@@ -102,8 +105,5 @@ const innerStyles = StyleSheet.create({
   },
   pickerItemStyle: {
     marginLeft: 0
-  },
-  errorItem: {
-    borderColor: theme.inputErrorBorderColor
   }
 });

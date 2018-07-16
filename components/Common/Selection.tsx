@@ -97,7 +97,7 @@ function RenderComponent({ component, value, onPress, ...extraProps }: IRenderPr
     return <CheckBox {...extraProps} checked={value} onPress={onPress} />;
   }
 
-  return <Switch {...extraProps} style={innerStyles.switch} value={value} onValueChange={onPress} />;
+  return <Switch {...extraProps} value={value} onValueChange={onPress} />;
 }
 
 const innerStyles = StyleSheet.create({
@@ -112,9 +112,6 @@ const innerStyles = StyleSheet.create({
   },
   col: {
     maxWidth: 65
-  },
-  switch: {
-    // marginLeft: 18
   },
   errorMessageLeft: {
     paddingLeft: 65

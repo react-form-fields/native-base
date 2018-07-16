@@ -2,10 +2,10 @@ import { Icon, Input, Item } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, TextInput, TextInputProperties } from 'react-native';
 
-import { theme } from '../../theme';
-import FieldBase, { PropsBase } from './Base';
-import Wrapper from './Wrapper';
+import FieldBase, { PropsBase } from './Common/Base';
+import Wrapper from './Common/Wrapper';
 
+// import { theme } from '../../theme';
 interface IProps extends PropsBase<TextInputProperties, 'onChange'> {
   value: string | number;
   onChange: (value: string) => void;
@@ -23,7 +23,9 @@ export default class FieldText extends FieldBase<IProps> {
 
     return [
       styles.bodyInner,
-      ...(this.errorMessage ? [innerStyles.errorItem, styles.errorItem] : [])
+      ...(this.errorMessage ? [{
+        borderColor: this.getThemeVariables().inputErrorBorderColor
+      }, styles.errorItem] : [])
     ];
   }
 
@@ -74,8 +76,5 @@ const innerStyles = StyleSheet.create({
     height: 41,
     lineHeight: 20,
     paddingLeft: 0
-  },
-  errorItem: {
-    borderColor: theme.inputErrorBorderColor
   }
 });

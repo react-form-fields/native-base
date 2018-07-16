@@ -11,9 +11,9 @@
     "validation",
     "mobile"
   ],
-  "version": "1.0.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "version": "1.0.8",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "license": "MIT",
   "author": {
     "name": "Daniel Prado",
@@ -32,23 +32,26 @@
     "prepare": "yarn tsc"
   },
   "dependencies": {
-    "@react-form-fields/core": "^1.0.3",
-    "luxon": "^1.3.1",
-    "native-base": "^2.6.1",
-    "react": "^16.3.0",
-    "react-native": "^0.56.0",
-    "react-native-modal-datetime-picker": "^6.0.0",
-    "tslib": "^1.9.2"
+    "@react-form-fields/core": ">=1.0.7",
+    "date-fns": ">=1.29.0",
+    "native-base": ">=2.2.0",
+    "react": ">=16.3.0",
+    "react-native": ">=0.56.0",
+    "react-native-modal-datetime-picker": ">=6.0.0",
+    "tslib": ">=1.9.0"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "native-base": ">=2.0.0",
+    "react": ">=16.3.0",
+    "react-native": ">=0.56.0"
   },
   "devDependencies": {
-    "@types/luxon": "^1.2.0",
-    "@types/node": "^10.3.0",
-    "@types/react": "^16.4.6",
-    "@types/react-native": "^0.55.27",
-    "husky": "^0.14.3",
-    "typescript": "^2.9.1"
+    "@types/luxon": "1.2.1",
+    "@types/node": "10.5.2",
+    "@types/prop-types": "15.5.3",
+    "@types/react": "16.4.6",
+    "@types/react-native": "0.56.1",
+    "husky": "0.14.3",
+    "typescript": "2.9.2"
   }
 }
