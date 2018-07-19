@@ -10,7 +10,7 @@ interface IProps extends PropsBase<NativeBase.Picker, 'onValueChange' | 'selecte
   icon?: string;
   value: any;
   onChange: (value: any) => void;
-  options?: { value: string, display: string }[];
+  options?: { value: any, display: string }[];
 }
 
 export default class FieldPicker extends FieldBase<IProps> {

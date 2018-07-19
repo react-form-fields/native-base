@@ -5,11 +5,9 @@ import { StyleSheet, TextInput, TextInputProperties } from 'react-native';
 import FieldBase, { PropsBase } from './Common/Base';
 import Wrapper from './Common/Wrapper';
 
-// import { theme } from '../../theme';
 interface IProps extends PropsBase<TextInputProperties, 'onChange'> {
   value: string | number;
   onChange: (value: string) => void;
-  next: () => any;
 }
 
 export default class FieldText extends FieldBase<IProps> {
@@ -47,7 +45,7 @@ export default class FieldText extends FieldBase<IProps> {
   }
 
   render() {
-    const { label, icon, next, value, styles } = this.props;
+    const { label, icon, next, value, styles, onChange, ...inputProps } = this.props;
 
     return (
       <React.Fragment>
@@ -56,6 +54,7 @@ export default class FieldText extends FieldBase<IProps> {
         <Wrapper label={label} icon={icon} error={this.errorMessage} styles={styles}>
           <Item style={this.itemStyle} error={!!this.errorMessage}>
             <Input
+              {...inputProps}
               ref={this.setRef}
               value={this.mask.apply((value || '').toString())}
               onChangeText={this.onChange}
