@@ -44,7 +44,7 @@ export class FieldBaseSelection extends FieldBase<IPropFieldBaseSelection & { co
       e.stopPropagation();
     }
 
-    this.setState({ touched: true });
+    this.setState({ showError: true });
     this.props.onChange(!this.props.value);
   }
 

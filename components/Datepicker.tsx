@@ -68,7 +68,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
   }
 
   onChange = (value: Date) => {
-    this.setState({ touched: true, showDatePicker: false });
+    this.setState({ showError: true, showDatePicker: false });
     this.props.onChange(value);
   }
 

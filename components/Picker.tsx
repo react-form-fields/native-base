@@ -21,7 +21,7 @@ export default class FieldPicker extends FieldBase<IProps> {
   setFocus = () => { };
 
   onChange = (value: any) => {
-    this.setState({ touched: true });
+    this.setState({ showError: true });
     this.props.onChange(value);
   }
 

@@ -36,7 +36,7 @@ export default class FieldText extends FieldBase<IProps> {
   }
 
   onChange = (value: string) => {
-    this.setState({ touched: true });
+    this.setState({ showError: true });
     this.props.onChange(this.mask.clean(value));
   }
 
