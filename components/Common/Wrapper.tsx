@@ -95,7 +95,7 @@ export default class Wrapper extends React.PureComponent<IWrapperProps & {
       <ListItem style={[innerStyles.container, styles.container]} button={!!onPress} onPress={onPress}>
         {!!icon &&
           <Left style={[innerStyles.iconWrapper, styles.iconWrapper]}>
-            {icon !== 'empty' && <Icon name={icon} style={this.iconStyle} type={getConfig().iconType} />}
+            {icon !== 'empty' && <Icon active name={icon} style={this.iconStyle} type={getConfig().iconType} />}
           </Left>
         }
         <Body>
