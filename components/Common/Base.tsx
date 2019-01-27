@@ -31,6 +31,8 @@ export default abstract class FieldBase<
   > extends FieldCoreBase<P, S> {
   protected field: FieldBase;
 
+  context: any;
+
   static contextTypes = {
     theme: PropTypes.object,
     foregroundColor: PropTypes.string,
@@ -58,7 +60,7 @@ export default abstract class FieldBase<
 
   getThemeVariables(): typeof variables {
     return this.context.theme
-      ? this.context.theme["@@shoutem.theme/themeStyle"].variables
+      ? this.context.theme['@@shoutem.theme/themeStyle'].variables
       : {};
   }
 

@@ -1,4 +1,6 @@
 import { IStateFieldBase } from '@react-form-fields/core/components/FieldCoreBase';
+import ValidationContextRegister from '@react-form-fields/core/components/ValidationContextRegister';
+import { getConfig } from '@react-form-fields/core/config';
 import { Icon, Input, Item } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -39,7 +41,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
       ...super.getDerivedStateFromProps(nextProps, currentState),
       currentValue,
       formattedValue
-    }
+    };
 
   }
 
@@ -90,7 +92,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
 
     return (
       <React.Fragment>
-        {super.render()}
+        <ValidationContextRegister field={this} />
 
         <Wrapper label={label} icon={icon} error={this.errorMessage} styles={styles}>
           <View onTouchStart={this.showPicker}>
@@ -106,9 +108,9 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
         </Wrapper>
 
         <DateTimePicker
-          titleIOS={`Selecione a ${mode === 'time' ? 'hora' : 'data'}`}
-          confirmTextIOS='Confirmar'
-          cancelTextIOS='Cancelar'
+          titleIOS={mode === 'time' ? getConfig().date.labels.titleTime : getConfig().date.labels.titleDate}
+          confirmTextIOS={getConfig().date.labels.ok}
+          cancelTextIOS={getConfig().date.labels.cancel}
           {...datepickerProps}
           date={value || new Date()}
           isVisible={showDatePicker}

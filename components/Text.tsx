@@ -1,3 +1,4 @@
+import ValidationContextRegister from '@react-form-fields/core/components/ValidationContextRegister';
 import { Icon, Input, Item } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, TextInput, TextInputProperties } from 'react-native';
@@ -7,7 +8,7 @@ import Wrapper from './Common/Wrapper';
 
 interface IProps extends PropsBase<TextInputProperties, 'onChange'> {
   value: string | number;
-  onChange: (value: string) => void;
+  onChange: (value: string | number) => void;
 }
 
 export default class FieldText extends FieldBase<IProps> {
@@ -49,7 +50,7 @@ export default class FieldText extends FieldBase<IProps> {
 
     return (
       <React.Fragment>
-        {super.render()}
+        <ValidationContextRegister field={this} />
 
         <Wrapper label={label} icon={icon} error={this.errorMessage} styles={styles}>
           <Item style={this.itemStyle} error={!!this.errorMessage}>

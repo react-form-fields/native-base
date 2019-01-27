@@ -61,7 +61,7 @@ export default class Wrapper extends React.PureComponent<IWrapperProps & {
 
   getThemeVariables(): typeof variables {
     return this.context.theme
-      ? this.context.theme["@@shoutem.theme/themeStyle"].variables
+      ? this.context.theme['@@shoutem.theme/themeStyle'].variables
       : {};
   }
 

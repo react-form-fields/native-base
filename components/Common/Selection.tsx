@@ -1,3 +1,4 @@
+import ValidationContextRegister from '@react-form-fields/core/components/ValidationContextRegister';
 import { CheckBox, Col, Grid, Radio, Row, Switch, Text } from 'native-base';
 import * as React from 'react';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
@@ -38,10 +39,10 @@ export class FieldBaseSelection extends FieldBase<IPropFieldBaseSelection & { co
 
   setFocus = () => { };
 
-  onChange = (e: GestureResponderEvent | boolean) => {
+  onChange = (e: React.SyntheticEvent | boolean) => {
     if (typeof e !== 'boolean') {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault && e.preventDefault();
+      e.stopPropagation && e.stopPropagation();
     }
 
     this.setState({ showError: true });
@@ -53,7 +54,7 @@ export class FieldBaseSelection extends FieldBase<IPropFieldBaseSelection & { co
 
     return (
       <Wrapper error={this.errorMessage} styles={this.wrapperStyle} icon={icon} onPress={this.onChange}>
-        {super.render()}
+        <ValidationContextRegister field={this} />
 
         <Grid>
           {position !== 'right' &&

@@ -1,3 +1,4 @@
+import ValidationContextRegister from '@react-form-fields/core/components/ValidationContextRegister';
 import { Body, Button, Header, Icon, Left, NativeBase, Picker, Right, Title, View } from 'native-base';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
@@ -45,7 +46,7 @@ export default class FieldPicker extends FieldBase<IProps> {
 
     return (
       <React.Fragment>
-        {super.render()}
+        <ValidationContextRegister field={this} />
 
         <Wrapper label={label} icon={icon} error={this.errorMessage} styles={styles}>
           <View style={this.pickerContainerStyle}>
@@ -59,19 +60,7 @@ export default class FieldPicker extends FieldBase<IProps> {
               textStyle={StyleSheet.flatten([innerStyles.pickerTextStyle, styles.pickerTextStyle])}
               itemStyle={StyleSheet.flatten([innerStyles.pickerItemStyle, styles.pickerItemStyle])}
               itemTextStyle={StyleSheet.flatten([innerStyles.pickerItemTextStyle, styles.pickerItemTextStyle])}
-              renderHeader={(backAction: any) =>
-                <Header>
-                  <Left>
-                    <Button transparent onPress={backAction}>
-                      <Icon name='close' />
-                    </Button>
-                  </Left>
-                  <Body>
-                    <Title>{label}</Title>
-                  </Body>
-                  <Right />
-                </Header>
-              }
+              renderHeader={this.renderHeader}
               {...pickerProps}
               onValueChange={this.onChange}
             >
@@ -84,6 +73,25 @@ export default class FieldPicker extends FieldBase<IProps> {
       </React.Fragment>
     );
   }
+
+  renderHeader = (backAction: any) => {
+    const { label } = this.props;
+
+    return (
+      <Header>
+        <Left>
+          <Button transparent onPress={backAction}>
+            <Icon name='close' />
+          </Button>
+        </Left>
+        <Body>
+          <Title>{label}</Title>
+        </Body>
+        <Right />
+      </Header>
+    );
+  }
+
 }
 
 const innerStyles = StyleSheet.create({

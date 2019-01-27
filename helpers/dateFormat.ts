@@ -7,7 +7,7 @@ const defaultFormats = {
   date: 'YYYY-MM-DD',
   time: 'HH:mm',
   dateTime: 'YYYY-MM-DD HH:mm'
-}
+};
 
 export function dateFormat(value: Date, mode: 'date' | 'time' | 'datetime'): string {
   if (!value || !(value instanceof Date)) return '';
@@ -22,5 +22,5 @@ function getConfigDate(): IConfig['date'] {
   return {
     ...(getConfig().date || {}),
     formats: ((getConfig().date || {}).formats || {})
-  }
+  };
 }
