@@ -16,7 +16,6 @@ type PropsResolver<T, E> = {
 };
 
 export type PropsBase<T = {}, E = null> = IPropsFieldBase & IWrapperProps & PropsResolver<T, E> & {
-  value: any;
   next?: () => any;
   onSubmit?: () => any;
   styles?: IWrapperProps['styles'] & {

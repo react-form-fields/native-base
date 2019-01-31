@@ -14,7 +14,7 @@ export function dateFormat(value: Date, mode: 'date' | 'time' | 'datetime'): str
   if (isNaN(value.getTime())) return '';
 
   const config = getConfigDate();
-  const formatString = getConfigDate().formats[mode] || defaultFormats[mode];
+  const formatString = config.formats[mode] || defaultFormats[mode];
   return format(value, formatString, config.locale ? { locale: config.locale } : null);
 }
 
