@@ -12,8 +12,6 @@ const langPTBR: IConfig = {
       dateTime: 'dd/MM/yyyy HH:ss',
     },
     labels: {
-      titleTime: 'Selecione a hora',
-      titleDate: 'Selecione a data',
       ok: 'Ok',
       cancel: 'Cancelar',
     }

@@ -108,7 +108,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
         </Wrapper>
 
         <DateTimePicker
-          titleIOS={mode === 'time' ? getConfig().date.labels.titleTime : getConfig().date.labels.titleDate}
+          titleIOS={label}
           confirmTextIOS={getConfig().date.labels.ok}
           cancelTextIOS={getConfig().date.labels.cancel}
           {...datepickerProps}

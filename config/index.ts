@@ -13,8 +13,6 @@ declare module '@react-form-fields/core/config' {
         dateTime?: string;
       },
       labels?: {
-        titleTime: string;
-        titleDate: string;
         ok: string;
         cancel: string;
       }
@@ -31,8 +29,6 @@ const defaultConfig: coreConfig.IConfig = {
       dateTime: 'yyyy-MM-dd HH:ss',
     },
     labels: {
-      titleTime: 'Select',
-      titleDate: 'Select',
       ok: 'Ok',
       cancel: 'Cancel',
     }

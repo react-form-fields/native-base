@@ -19,11 +19,14 @@ export default class FieldPicker extends FieldBase<IProps> {
     styles: {}
   };
 
-  setFocus = () => { };
+  setFocus = () => {
+  }
 
   onChange = (value: any) => {
     this.setState({ showError: true });
     this.props.onChange(value);
+
+    this.goNext();
   }
 
   get pickerContainerStyle() {
@@ -55,6 +58,7 @@ export default class FieldPicker extends FieldBase<IProps> {
                 width: this.getThemeVariables().deviceWidth - 20
               }, styles.picker])}
               iosHeader={label}
+              iosIcon={<Icon name='arrow-down' />}
               prompt={label}
               selectedValue={value}
               textStyle={StyleSheet.flatten([innerStyles.pickerTextStyle, styles.pickerTextStyle])}
