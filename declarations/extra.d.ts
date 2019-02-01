@@ -228,6 +228,7 @@ declare module 'native-base/src/theme/variables/platform' {
     // Other
     borderRadiusBase: platform === "ios" ? 5 : 2,
     borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
+    borderBottomWidth: 1,
     contentPadding: 10,
     dropdownLinkColor: "#414142",
     inputLineHeight: 24,

@@ -31,7 +31,7 @@ export default class FieldPicker extends FieldBase<IProps> {
 
     return [
       innerStyles.pickerContainer, {
-        borderWidth: this.getThemeVariables().borderWidth * 2,
+        borderWidth: (this.getThemeVariables().borderBottomWidth || 0.5) * 2,
         borderColor: this.getThemeVariables().inputBorderColor,
       },
       styles.pickerContainer,
