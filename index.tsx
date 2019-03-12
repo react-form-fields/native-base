@@ -1,12 +1,11 @@
-import CustomMessageComponent from '@react-form-fields/core/components/CustomMessage';
-import ValidationContextComponent from '@react-form-fields/core/components/ValidationContext';
-
 import FieldCheckboxComponent from './components/Checkbox';
+import CustomMessageComponent from './components/CustomMessage';
 import FieldDatepickerComponent from './components/Datepicker';
 import FieldPickerComponent from './components/Picker';
 import FieldRadioComponent from './components/Radio';
 import FieldSwitchComponent from './components/Switch';
 import FieldTextComponent from './components/Text';
+import ValidationContextComponent from './components/ValidationContext';
 
 export * from './config';
 
