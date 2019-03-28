@@ -33,7 +33,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
 
     if (currentValue !== nextProps.value) {
       currentValue = nextProps.value;
-      formattedValue = dateFormat(nextProps.value, nextProps.mode || 'date');
+      formattedValue = dateFormat(nextProps.value, nextProps.format || nextProps.mode || 'date');
     }
 
     return {
@@ -88,7 +88,7 @@ export default class FieldDatepicker extends FieldBase<IProps, IState> {
 
   render() {
     const { showDatePicker, formattedValue } = this.state;
-    const { label, icon, value, styles, format, mode, ...datepickerProps } = this.props;
+    const { label, icon, value, styles, format, ...datepickerProps } = this.props;
 
     return (
       <React.Fragment>

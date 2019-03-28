@@ -9,12 +9,12 @@ const defaultFormats = {
   dateTime: 'YYYY-MM-DD HH:mm'
 };
 
-export function dateFormat(value: Date, mode: 'date' | 'time' | 'datetime'): string {
+export function dateFormat(value: Date, mode: string): string {
   if (!value || !(value instanceof Date)) return '';
   if (isNaN(value.getTime())) return '';
 
   const config = getConfigDate();
-  const formatString = config.formats[mode] || defaultFormats[mode];
+  const formatString = config.formats[mode] || defaultFormats[mode] || mode;
   return format(value, formatString, config.locale ? { locale: config.locale } : null);
 }
 
