@@ -4,9 +4,9 @@ import * as format from 'date-fns/format';
 import { getConfig } from '../config';
 
 const defaultFormats = {
-  date: 'YYYY-MM-DD',
+  date: 'yyyy-MM-dd',
   time: 'HH:mm',
-  dateTime: 'YYYY-MM-DD HH:mm'
+  dateTime: 'yyyy-MM-dd HH:mm'
 };
 
 export function dateFormat(value: Date, mode: string): string {
