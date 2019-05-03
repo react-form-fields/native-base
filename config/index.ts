@@ -21,7 +21,7 @@ declare module '@react-form-fields/core/config' {
 }
 
 const defaultConfig: coreConfig.IConfig = {
-  validationOn: 'onChange',
+  validationOn: 'onSubmit',
   date: {
     formats: {
       date: 'yyyy-MM-dd',

@@ -5,6 +5,7 @@ import { StyleSheet, TextInput, TextInputProperties } from 'react-native';
 
 import FieldBase, { PropsBase } from './Common/Base';
 import Wrapper from './Common/Wrapper';
+import { getConfig } from '../config';
 
 interface IProps extends PropsBase<TextInputProperties, 'onChange'> {
   value: string | number;
@@ -37,7 +38,7 @@ export default class FieldText extends FieldBase<IProps> {
   }
 
   onChange = (value: string) => {
-    this.setState({ showError: true });
+    getConfig().validationOn === 'onChange' && this.setState({ showError: true });
     this.props.onChange(this.mask.clean(value));
   }
 
