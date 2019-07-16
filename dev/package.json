@@ -1,5 +1,5 @@
 {
-  "name": "@react-form-fields/react-native-paper-test",
+  "name": "@react-form-fields/native-base-test",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -9,7 +9,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-form-fields/native-base": "1.3.0",
+    "@react-form-fields/native-base": "2.0.0",
     "expo": "33.0.7",
     "react": "16.8.6",
     "react-dom": "16.8.6",
