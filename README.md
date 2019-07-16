@@ -1,14 +1,13 @@
-React Form Fields: Material UI
+React Form Fields: NativeBase
 ------------------------------
 
 See [Core](https://github.com/react-form-fields/core)
-See [Demo](https://react-form-fields.github.io/material-ui)
-See [API.md](https://github.com/react-form-fields/material-ui/blob/master/API.md) for details
+See [Demo](https://exp.host/@danieloprado/react-form-fields-native-base)
+See [API.md](https://github.com/react-form-fields/native-base/blob/master/API.md) for details
 
 ## Requirements 
 
 * React >= 16.0.0
-* Material-ui >= 1.0.0
 
 ## Install
 
