@@ -1,11 +1,12 @@
 import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
-import { Button, Header, Icon, Input, Item, Text, Title } from 'native-base';
+import { Body, Button, Header, Icon, Input, Item, Text, Title } from 'native-base';
 import * as React from 'react';
 import {
   Dimensions,
   Keyboard,
   KeyboardAvoidingView,
   Modal as ReactNativeModal,
+  Platform,
   ScrollView,
   StyleSheet,
   View,
@@ -67,14 +68,14 @@ const Modal = React.memo((props: IModalProps) => {
   );
 
   React.useEffect(() => {
-    const eventShow = Keyboard.addListener('keyboardWillShow', e => {
+    const eventShow = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', e => {
       setScrollAreaStyle({
         ...scrollAreaStyle,
         maxHeight: Dimensions.get('screen').height - e.endCoordinates.height - 200
       });
     });
 
-    const eventHide = Keyboard.addListener('keyboardWillHide', () => {
+    const eventHide = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', () => {
       setScrollAreaStyle({ ...scrollAreaStyle, maxHeight: Dimensions.get('screen').height - 300 });
     });
 
@@ -96,19 +97,21 @@ const Modal = React.memo((props: IModalProps) => {
 
   return (
     <ReactNativeModal visible={visible} onRequestClose={handleDismiss} transparent={true}>
-      <KeyboardAvoidingView behavior='padding' style={styles.keyboardView}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null} style={styles.keyboardView}>
         <View style={styles.modalBackdrop}>
           <View style={styles.modalContainer}>
             {searchable ? (
-              <Header searchBar rounded style={styles.header}>
+              <Header searchBar rounded style={styles.headerSearch}>
                 <Item>
                   <Icon name='ios-search' />
                   <Input placeholder={label} value={query} onChangeText={setQuery} />
                 </Item>
               </Header>
             ) : (
-              <Header>
-                <Title>{label}</Title>
+              <Header style={styles.headerSearch}>
+                <Body style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                  <Title style={styles.headerSearchTitle}>{label}</Title>
+                </Body>
               </Header>
             )}
             <View style={scrollAreaStyle}>
@@ -146,9 +149,26 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1
   },
-  header: {
+  headerSearch: {
     paddingTop: 0,
-    backgroundColor: '#F8F8F8'
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.2,
+    borderBottomWidth: 0
+  },
+  header: {
+    backgroundColor: 'white',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.2,
+    borderBottomWidth: 0
+  },
+  headerSearchTitle: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 16
   },
   modalBackdrop: {
     backgroundColor: '#0000009c',
@@ -175,11 +195,14 @@ const styles = StyleSheet.create({
   modalActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderTopWidth: 1,
-    borderTopColor: '#c7c7c7',
-    backgroundColor: '#F8F8F8',
+    backgroundColor: 'white',
     padding: 8,
-    width: '100%'
+    width: '100%',
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.2
   },
   notFound: {
     textAlign: 'center',
