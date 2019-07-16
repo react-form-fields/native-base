@@ -1,0 +1,66 @@
+{
+  "name": "@react-form-fields/native-base",
+  "description": "Native Base Form Fields",
+  "private": false,
+  "keywords": [
+    "native-base",
+    "react",
+    "react native",
+    "react-form",
+    "form",
+    "validation",
+    "mobile"
+  ],
+  "version": "1.3.0",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "license": "MIT",
+  "author": {
+    "name": "Daniel Prado",
+    "email": "danielprado.ad@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-form-fields/native-base"
+  },
+  "bugs": {
+    "url": "https://github.com/react-form-fields/native-base/issues"
+  },
+  "scripts": {
+    "start": "sh ./dev.sh",
+    "preprepare": "yarn lint",
+    "prepare": "yarn tsc",
+    "lint": "yarn eslint \"./**/*.ts\" \"./**/*.tsx\""
+  },
+  "dependencies": {
+    "@react-form-fields/core": "^2.3.1",
+    "date-fns": "^2.0.0-alpha.21",
+    "native-base": ">=2.0.0",
+    "react-native-modal-datetime-picker": "^7.5.0",
+    "tslib": "^1.10.0",
+    "uuid": "^3.3.2"
+  },
+  "peerDependencies": {
+    "native-base": ">=2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "12.6.2",
+    "@types/prop-types": "15.7.1",
+    "@types/react": "16.8.23",
+    "@types/react-native": "0.60.0",
+    "@types/uuid": "3.4.5",
+    "@typescript-eslint/eslint-plugin": "1.11.0",
+    "@typescript-eslint/parser": "1.11.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "prettier": "1.18.2",
+    "concurrently": "4.1.1",
+    "eslint": "6.0.1",
+    "eslint-plugin-react": "7.14.2",
+    "eslint-plugin-react-hooks": "1.6.1",
+    "husky": "3.0.0",
+    "react": "16.8.6",
+    "react-native": "0.60.3",
+    "typescript": "3.5.3"
+  }
+}

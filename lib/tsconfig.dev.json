@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dev/node_modules/@react-form-fields/native-base",
+    "declarationDir": "../dev/node_modules/@react-form-fields/native-base"
+  }
+}

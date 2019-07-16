@@ -1,0 +1,2 @@
+(cd ../dev && yarn && rm -rf ../dev/node_modules/@react-form-fields/native-base/node_modules/react)
+yarn concurrently -r "tsc -w --preserveWatchOutput -p tsconfig.dev.json" "(cd ../dev && REACT_DEBUGGER= yarn expo r -c)"
