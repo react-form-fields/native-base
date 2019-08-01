@@ -5,7 +5,7 @@ import { IConfig } from '../context';
 
 const langENUS: IConfig = {
   ...coreLangENUS,
-  selectLabels: {
+  select: {
     done: 'Done',
     cancel: 'Cancel',
     notFound: 'Not Found'

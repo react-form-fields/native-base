@@ -20,6 +20,6 @@ export function dateFormat(value: Date, mode: string, config: IConfig): string {
 function getConfigDate(config: IConfig): IConfig['date'] {
   return {
     ...(config.date || {}),
-    formats: ((config.date || {} as any).formats || {})
+    formats: (config.date || ({} as any)).formats || {}
   } as any;
 }

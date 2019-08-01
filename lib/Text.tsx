@@ -24,7 +24,7 @@ export interface IFieldTextProps extends PropsResolver<NativeBase.Input>, IFlowI
 
 const FieldText = React.memo(
   React.forwardRef<IFieldTextRef, IFieldTextProps>((props, ref) => {
-    const { onChange, marginBottom, helperText, onSubmitEditing, returnKeyType, displayValue } = props;
+    const { onChange, marginBottom, helperText, onSubmitEditing, returnKeyType, displayValue, leftIcon } = props;
 
     const config = useConfigContext();
     const { setDirty, showError, errorMessage, isValid } = useValidation(props);
@@ -35,6 +35,8 @@ const FieldText = React.memo(
       props,
       React.useCallback(() => inputRef.current && inputRef.current._root.focus(), [inputRef])
     );
+
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const otherProps = useMemoOtherProps(
       props,
@@ -77,6 +79,26 @@ const FieldText = React.memo(
       [inputRef, setDirty]
     );
 
+    const toggleShowPassword = React.useCallback(() => {
+      setShowPassword(!showPassword);
+    }, [showPassword]);
+
+    const [rightIconComponent, rightIconAction] = React.useMemo(() => {
+      if (props.rightIcon || !props.secureTextEntry) {
+        return [props.rightIcon, props.rightIconAction];
+      }
+
+      return [showPassword ? 'eye-off' : 'eye', toggleShowPassword];
+    }, [props.rightIcon, props.rightIconAction, props.secureTextEntry, showPassword, toggleShowPassword]);
+
+    const secureTextEntry = React.useMemo(() => {
+      if (props.secureTextEntry !== true || showPassword) {
+        return false;
+      }
+
+      return true;
+    }, [props.secureTextEntry, showPassword]);
+
     return (
       <Wrapper
         label={props.label}
@@ -87,6 +109,9 @@ const FieldText = React.memo(
         helperText={helperText}
         marginBottom={marginBottom}
         isValid={isValid}
+        leftIcon={leftIcon}
+        rightIcon={rightIconComponent}
+        rightIconAction={rightIconAction}
       >
         <Input
           {...otherProps}
@@ -95,6 +120,7 @@ const FieldText = React.memo(
           onChangeText={onChangeHandler}
           returnKeyType={returnKeyType ? returnKeyType : onSubmitEditing ? 'send' : hasValidIndex ? 'next' : 'default'}
           onSubmitEditing={onSubmitHandler}
+          secureTextEntry={secureTextEntry}
         />
       </Wrapper>
     );

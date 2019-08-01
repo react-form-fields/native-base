@@ -35,6 +35,7 @@ const Modal = React.memo((props: IModalProps) => {
   } = props;
 
   const config = useConfigContext();
+  config.select = config.select || ({} as any);
 
   const [query, setQuery] = React.useState('');
   const [scrollAreaStyle, setScrollAreaStyle] = React.useState<ViewStyle>(styles.scrollArea);
@@ -60,12 +61,7 @@ const Modal = React.memo((props: IModalProps) => {
     return !query ? options || [] : (options || []).filter(o => o.label.includes(query));
   }, [options, query]);
 
-  const modalActionStyles = React.useMemo<ViewStyle>(
-    () => ({
-      ...styles.modalActions
-    }),
-    []
-  );
+  const modalActionStyles = React.useMemo<ViewStyle>(() => ({ ...styles.modalActions }), []);
 
   React.useEffect(() => {
     const eventShow = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', e => {
@@ -96,14 +92,20 @@ const Modal = React.memo((props: IModalProps) => {
   }, [handleDismissProp]);
 
   return (
-    <ReactNativeModal visible={visible} onRequestClose={handleDismiss} transparent={true}>
+    <ReactNativeModal
+      visible={visible}
+      onRequestClose={handleDismiss}
+      transparent={true}
+      animated={true}
+      animationType='fade'
+    >
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null} style={styles.keyboardView}>
         <View style={styles.modalBackdrop}>
           <View style={styles.modalContainer}>
             {searchable ? (
               <Header searchBar rounded style={styles.headerSearch}>
                 <Item>
-                  <Icon name='ios-search' />
+                  <Icon {...(config.iconProps || {})} name={config.select.searchIcon || 'search'} />
                   <Input placeholder={label} value={query} onChangeText={setQuery} />
                 </Item>
               </Header>
@@ -125,17 +127,17 @@ const Modal = React.memo((props: IModalProps) => {
                     setInternalValue={setInternalValue}
                   />
                   {!filteredOptions.length && (
-                    <Text style={styles.notFound}>{(config.selectLabels || { notFound: 'Not found' }).notFound}</Text>
+                    <Text style={styles.notFound}>{(config.select || { notFound: 'Not found' }).notFound}</Text>
                   )}
                 </View>
               </ScrollView>
             </View>
             <View style={modalActionStyles}>
               <Button transparent dark onPress={handleDismiss}>
-                <Text>{(config.selectLabels || { cancel: 'Cancel' }).cancel}</Text>
+                <Text>{(config.select || { cancel: 'Cancel' }).cancel}</Text>
               </Button>
               <Button onPress={handleDone}>
-                <Text>{(config.selectLabels || { done: 'Done' }).done}</Text>
+                <Text>{(config.select || { done: 'Done' }).done}</Text>
               </Button>
             </View>
           </View>

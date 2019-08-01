@@ -1,9 +1,8 @@
 import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
 import useMemoOtherProps from '@react-form-fields/core/hooks/useMemoOtherProps';
 import { PropsResolver } from '@react-form-fields/core/interfaces/props';
-import { Button, Icon } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { NativeTouchEvent } from 'react-native';
 import DateTimePicker, { DateTimePickerProps } from 'react-native-modal-datetime-picker';
 
 import { dateFormat } from './helpers/dateFormat';
@@ -24,18 +23,42 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
   const { value, onChange, mode, ...otherProps } = props;
 
   const [showPicker, setShowPicker] = React.useState(false);
+  const [touchStart, setTouchStart] = React.useState<NativeTouchEvent>(null);
+  const [openCanceled, setOpenCanceled] = React.useState(false);
+
   const fieldTextRef = React.useRef<IFieldTextRef>();
   const datePickerProps = useMemoOtherProps(props, 'value', 'onChange');
 
   const config = useConfigContext();
+  config.date = config.date || ({} as any);
 
   const onFocusFlow = React.useCallback(() => {}, []);
   useFieldFlow(props, onFocusFlow);
 
-  const onTouchEndHandler = React.useCallback(() => setShowPicker(true), [setShowPicker]);
-  const clearHandler = React.useCallback(() => onChange(null), [onChange]);
+  const handleTouchStart = React.useCallback((e: { nativeEvent: NativeTouchEvent }) => {
+    setTouchStart(e.nativeEvent);
+  }, []);
 
-  const onConfirmHandler = React.useCallback(
+  const handleTouchMove = React.useCallback(
+    (e: { nativeEvent: NativeTouchEvent }) => {
+      const y = e.nativeEvent.locationY - touchStart.locationY;
+      if (y > 5 || y < -5) setOpenCanceled(true);
+    },
+    [touchStart]
+  );
+
+  const handleTouchEnd = React.useCallback(() => {
+    if (openCanceled) {
+      setOpenCanceled(false);
+      return;
+    }
+
+    setShowPicker(true);
+  }, [openCanceled]);
+
+  const handleClear = React.useCallback(() => onChange(null), [onChange]);
+
+  const handleConfirm = React.useCallback(
     (value: Date) => {
       config.validationOn === 'onChange' && fieldTextRef.current.setDirty(true);
       onChange(value);
@@ -45,36 +68,25 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
   );
 
   const onCancelHandler = React.useCallback(() => setShowPicker(false), [setShowPicker]);
+  const rightIcon = React.useMemo(() => config.date.clearIcon || 'md-close', [config.date.clearIcon]);
 
   return (
     <React.Fragment>
-      <View>
-        <TouchableOpacity onPress={onTouchEndHandler}>
-          <View pointerEvents='none'>
-            <FieldText
-              {...otherProps}
-              ref={fieldTextRef}
-              value={value ? value.toISOString() : null}
-              displayValue={dateFormat(value, mode || 'date', config)}
-              tabIndex={null}
-              flowIndex={null}
-              onChange={nullCallback}
-              editable={false}
-            />
-          </View>
-        </TouchableOpacity>
-        {!!value && (
-          <Button
-            icon
-            onPress={clearHandler}
-            transparent
-            dark
-            style={[styles.icon, (config.date || { clearButtonStyle: {} }).clearButtonStyle]}
-          >
-            <Icon name='close' {...((config.date || { clearButtonIconProps: {} }).clearButtonIconProps || {})} />
-          </Button>
-        )}
-      </View>
+      <FieldText
+        {...otherProps}
+        ref={fieldTextRef}
+        value={value ? value.toISOString() : null}
+        displayValue={dateFormat(value, mode || 'date', config)}
+        tabIndex={null}
+        flowIndex={null}
+        onChange={nullCallback}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
+        editable={false}
+        rightIcon={value ? rightIcon : null}
+        rightIconAction={handleClear}
+      />
 
       <DateTimePicker
         titleIOS={props.label}
@@ -85,20 +97,11 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
         mode={mode}
         date={value || new Date()}
         isVisible={showPicker}
-        onConfirm={onConfirmHandler}
+        onConfirm={handleConfirm}
         onCancel={onCancelHandler}
       />
     </React.Fragment>
   );
-});
-
-const styles = StyleSheet.create({
-  icon: {
-    position: 'absolute',
-    top: 8,
-    right: -8,
-    opacity: 0.6
-  }
 });
 
 FieldDatepicker.displayName = 'FieldDatepicker';

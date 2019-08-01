@@ -7,8 +7,8 @@ export interface IFieldFlowContext {
 }
 
 const FieldFlowContext = React.createContext<IFieldFlowContext>({
-  registerPosition: () => { },
-  unregisterPosition: () => { },
+  registerPosition: () => {},
+  unregisterPosition: () => {},
   goNext: () => false
 });
 

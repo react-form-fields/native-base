@@ -130,12 +130,24 @@ const App = memo(() => {
                 />
 
                 <FieldText
+                  label='Password'
+                  value={value}
+                  onChange={setValue}
+                  flowIndex={4}
+                  validation='required|string|min:3|max:10'
+                  leftIcon='lock'
+                  secureTextEntry={true}
+                  marginBottom
+                />
+
+                <FieldText
                   label='Money'
                   mask='money'
                   keyboardType='number-pad'
                   flowIndex={3}
                   value={valueMoney}
                   validation='numeric|min:3|max:10'
+                  leftIcon='cash'
                   onChange={setValueMoney}
                   marginBottom
                 />

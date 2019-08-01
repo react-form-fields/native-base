@@ -5,7 +5,7 @@ import { IConfig } from '../context';
 
 const langPTBR: IConfig = {
   ...coreLangPTBR,
-  selectLabels: {
+  select: {
     done: 'Ok',
     cancel: 'Cancelar',
     notFound: 'Nenhum item encontrado'

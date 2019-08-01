@@ -1,6 +1,6 @@
 import FieldValidationConfigContextCore from '@react-form-fields/core/ConfigProvider';
 import { NativeBase } from 'native-base';
-import { TextStyle, ViewStyle } from 'react-native';
+import { TextStyle } from 'react-native';
 
 export { IConfig } from '@react-form-fields/core/ConfigProvider';
 
@@ -9,11 +9,12 @@ declare module '@react-form-fields/core/ConfigProvider/context' {
     validationOn?: 'onChange' | 'onSubmit';
     itemProps?: NativeBase.Item;
     labelProps?: NativeBase.Label;
+    iconProps?: NativeBase.Icon;
     errorStyle?: TextStyle;
     helperTextStyle?: TextStyle;
-    selectLabels?: {
-      buttonStyle?: ViewStyle;
-      buttonIconProps?: NativeBase.Icon;
+    select?: {
+      icon?: string;
+      searchIcon?: string;
       done: string;
       cancel: string;
       notFound: string;
@@ -21,8 +22,7 @@ declare module '@react-form-fields/core/ConfigProvider/context' {
     date?: {
       dataFnsLocale: any;
       pickerLocale: string;
-      clearButtonStyle?: ViewStyle;
-      clearButtonIconProps?: NativeBase.Icon;
+      clearIcon?: string;
       formats: {
         date: string;
         time: string;

@@ -1,9 +1,8 @@
 import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
 import useValidation from '@react-form-fields/core/hooks/useValidation';
 import { PropsResolver } from '@react-form-fields/core/interfaces/props';
-import { Button, Icon } from 'native-base';
 import * as React from 'react';
-import { Dimensions, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { NativeTouchEvent, TouchableOpacity } from 'react-native';
 
 import useFieldFlow, { IFlowIndexProp } from '../hooks/useFieldFlow';
 import ThemeProvider from '../shared/ThemeProvider';
@@ -32,8 +31,12 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
   const { label, options, value, onChange, formatValueDisplay, ...otherProps } = props;
 
   const [visible, setVisibility] = React.useState(false);
+  const [touchStart, setTouchStart] = React.useState<NativeTouchEvent>(null);
+  const [openCanceled, setOpenCanceled] = React.useState(false);
 
   const config = useConfigContext();
+  config.select = config.select || ({} as any);
+
   const { setDirty, showError, errorMessage } = useValidation(props);
   useFieldFlow(props, React.useCallback(() => {}, []));
 
@@ -44,9 +47,26 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
     return selectedValues.length > 3 ? `${selectedValues.length} items` : selectedValues.map(o => o.label).join(', ');
   }, [value, options, formatValueDisplay]);
 
-  const handleOpen = React.useCallback(() => {
+  const handleTouchStart = React.useCallback((e: { nativeEvent: NativeTouchEvent }) => {
+    setTouchStart(e.nativeEvent);
+  }, []);
+
+  const handleTouchMove = React.useCallback(
+    (e: { nativeEvent: NativeTouchEvent }) => {
+      const y = e.nativeEvent.locationY - touchStart.locationY;
+      if (y > 5 || y < -5) setOpenCanceled(true);
+    },
+    [touchStart]
+  );
+
+  const handleTouchEnd = React.useCallback(() => {
+    if (openCanceled) {
+      setOpenCanceled(false);
+      return;
+    }
+
     setVisibility(true);
-  }, [setVisibility]);
+  }, [openCanceled]);
 
   const handleDone = React.useCallback(
     (value: any) => {
@@ -63,103 +83,33 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
 
   React.useEffect(() => () => setVisibility(false), []);
 
+  const rightIcon = React.useMemo(() => config.select.icon || 'ios-arrow-down', [config.select.icon]);
+
   return (
     <ThemeProvider>
-      <TouchableOpacity onPress={handleOpen}>
-        <View pointerEvents='none'>
-          <FieldText
-            {...otherProps}
-            label={label}
-            ref={null}
-            value={displayValue}
-            validation={null}
-            errorMessage={showError ? errorMessage : null}
-            onChange={nullCallback}
-            flowIndex={null}
-            tabIndex={null}
-            editable={false}
-          />
-          <Button
-            small
-            icon
-            transparent
-            dark
-            style={[styles.icon, (config.selectLabels || { buttonStyle: {} }).buttonStyle]}
-          >
-            <Icon
-              name={Platform.OS === 'ios' ? 'arrow-down' : 'arrow-dropdown'}
-              {...((config.selectLabels || { buttonIconProps: {} }).buttonIconProps || {})}
-            />
-          </Button>
-        </View>
+      <TouchableOpacity onPress={handleTouchEnd}>
+        <FieldText
+          {...otherProps}
+          label={label}
+          ref={null}
+          value={displayValue}
+          validation={null}
+          errorMessage={showError ? errorMessage : null}
+          onChange={nullCallback}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchMove={handleTouchMove}
+          flowIndex={null}
+          tabIndex={null}
+          editable={false}
+          rightIcon={rightIcon}
+          rightIconAction={handleTouchEnd}
+        />
       </TouchableOpacity>
 
       <Modal {...props} ref={null} visible={visible} handleDismiss={handleDismiss} handleDone={handleDone} />
     </ThemeProvider>
   );
-});
-
-const styles = StyleSheet.create({
-  header: {
-    paddingHorizontal: 10,
-    paddingVertical: 5
-  },
-  modalBackdrop: {
-    backgroundColor: '#0000009c',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalContainer: {
-    backgroundColor: 'white',
-    borderRadius: 5,
-    elevation: 4,
-    shadowColor: 'black',
-    overflow: 'hidden',
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowOpacity: 0.24,
-    shadowRadius: 5,
-    minWidth: Dimensions.get('screen').width * 0.7,
-    maxHeight: Dimensions.get('screen').height * 0.9,
-    maxWidth: Dimensions.get('screen').width * 0.9
-  },
-  modalActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderTopWidth: 1,
-    borderTopColor: 'black',
-    padding: 8,
-    width: '100%'
-  },
-  searchbar: {
-    elevation: 0
-  },
-  notFound: {
-    textAlign: 'center',
-    fontSize: 16,
-    fontStyle: 'italic',
-    opacity: 0.8
-  },
-  icon: {
-    position: 'absolute',
-    top: 14,
-    right: -8,
-    opacity: 0.6
-  },
-  iconOutlined: {
-    top: 12
-  },
-  scrollArea: {
-    maxHeight: Dimensions.get('screen').height - 200,
-    paddingHorizontal: 0
-  },
-  scrollView: {
-    paddingVertical: 10,
-    paddingHorizontal: 10
-  }
 });
 
 export default FieldSelect;
