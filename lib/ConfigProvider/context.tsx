@@ -7,9 +7,9 @@ export { IConfig } from '@react-form-fields/core/ConfigProvider';
 declare module '@react-form-fields/core/ConfigProvider/context' {
   interface IConfig {
     validationOn?: 'onChange' | 'onSubmit';
-    itemProps?: NativeBase.Item;
-    labelProps?: NativeBase.Label;
-    iconProps?: NativeBase.Icon;
+    itemProps?: Partial<NativeBase.Item>;
+    labelProps?: Partial<NativeBase.Label>;
+    iconProps?: Partial<NativeBase.Icon>;
     errorStyle?: TextStyle;
     helperTextStyle?: TextStyle;
     select?: {

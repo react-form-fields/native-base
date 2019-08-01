@@ -29,7 +29,7 @@ export default class ConfigBuilder extends CoreConfigBuilder {
   }
 
   public setIconProps(
-    iconProps: NativeBase.Icon,
+    iconProps: Partial<NativeBase.Icon>,
     selectIcon?: string,
     selectSearchIcon?: string,
     dateClearIcon?: string
