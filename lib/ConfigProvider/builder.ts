@@ -28,8 +28,28 @@ export default class ConfigBuilder extends CoreConfigBuilder {
     return this;
   }
 
-  public setIconProps(iconProps: NativeBase.Icon) {
-    this.config = { ...this.config, iconProps };
+  public setIconProps(
+    iconProps: NativeBase.Icon,
+    selectIcon?: string,
+    selectSearchIcon?: string,
+    dateClearIcon?: string
+  ) {
+    const selectConfig = this.config.select || { icon: '', searchIcon: '' };
+    const dateConfig = this.config.date || { clearIcon: '' };
+
+    this.config = {
+      ...this.config,
+      iconProps,
+      select: {
+        ...selectConfig,
+        icon: selectIcon || selectConfig.icon,
+        searchIcon: selectSearchIcon || selectConfig.searchIcon
+      } as any,
+      date: {
+        ...dateConfig,
+        clearIcon: dateClearIcon || dateConfig.clearIcon
+      } as any
+    };
     return this;
   }
 
