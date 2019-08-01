@@ -856,10 +856,10 @@
     uuid ">=3.0.0"
     validatorjs "^3.15.1"
 
-"@react-form-fields/native-base@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/native-base/-/native-base-2.0.0.tgz#a70aab6b507ead99a0cb2885536963da3f933e3f"
-  integrity sha512-wjyaSWMkDI22i5eimy/8qF9PTYy3m90izog6i7PVnsHJLn5bnNpQ/LXlnRbW9Cdc49yjnOqLPQ7tgSu0nImc2w==
+"@react-form-fields/native-base@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/native-base/-/native-base-2.1.0.tgz#f6f1fab442023600459d1c59bca26aabc33e5b52"
+  integrity sha512-CuCKxBkvoPBc+S3fw8jai9nnvcD8Y0Ku/rZzWv6W0U7kPn/dBQqwd6TVdoceCNL+B3Sluezw7pH25MUwdzpSRg==
   dependencies:
     "@react-form-fields/core" "^2.3.1"
     date-fns "^2.0.0-alpha.21"
