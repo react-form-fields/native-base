@@ -28,6 +28,11 @@ export default class ConfigBuilder extends CoreConfigBuilder {
     return this;
   }
 
+  public setIconProps(iconProps: NativeBase.Icon) {
+    this.config = { ...this.config, iconProps };
+    return this;
+  }
+
   public setLabelProps(labelProps: NativeBase.Label) {
     this.config = { ...this.config, labelProps };
     return this;
