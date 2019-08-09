@@ -15,6 +15,7 @@ export interface IFieldDatepickerProps
     IFlowIndexProp {
   value: Date;
   onChange: (value: Date) => void;
+  notClearable?: boolean;
 }
 
 const nullCallback = () => {};
@@ -68,7 +69,17 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
   );
 
   const onCancelHandler = React.useCallback(() => setShowPicker(false), [setShowPicker]);
-  const rightIcon = React.useMemo(() => config.date.clearIcon || 'md-close', [config.date.clearIcon]);
+  const rightIcon = React.useMemo(() => {
+    if (props.rightIcon) {
+      return props.rightIcon;
+    }
+
+    if (props.notClearable) {
+      return null;
+    }
+
+    return config.date.clearIcon || 'md-close';
+  }, [config.date.clearIcon, props.notClearable, props.rightIcon]);
 
   return (
     <React.Fragment>
@@ -85,7 +96,7 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
         onTouchMove={handleTouchMove}
         editable={false}
         rightIcon={value ? rightIcon : null}
-        rightIconAction={handleClear}
+        rightIconAction={props.rightIconAction || handleClear}
       />
 
       <DateTimePicker
