@@ -116,7 +116,7 @@ const Modal = React.memo(
         onRequestClose={handleDismiss}
         transparent={true}
         animated={true}
-        animationType='fade'
+        animationType={props.fullscreen ? 'slide' : 'fade'}
         ref={ref}
       >
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null} style={styles.keyboardView}>
