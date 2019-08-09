@@ -98,12 +98,13 @@ const App = memo(() => {
                 />
 
                 <FieldSelect
-                  label='Select'
+                  label='Select FullScreen'
                   flowIndex={8}
                   value={valueSelect}
                   options={selectOptions}
                   onChange={setValueSelect}
                   validation='required|date'
+                  fullscreen
                   marginBottom
                   searchable
                 />

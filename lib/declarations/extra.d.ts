@@ -1,3 +1,8 @@
+
+declare module 'native-base' {
+  const connectStyle: any;
+}
+
 declare module 'native-base/src/theme/variables/platform' {
   export default {
     platformStyle,

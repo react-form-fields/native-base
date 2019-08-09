@@ -9,7 +9,7 @@ import ThemeProvider from '../shared/ThemeProvider';
 import FieldText, { IFieldTextProps } from '../Text';
 import Modal from './Modal';
 
-export interface IFieldSelectProps extends PropsResolver<IFieldTextProps>, IFlowIndexProp {
+export interface IFieldSelectProps extends PropsResolver<IFieldTextProps, 'style'>, IFlowIndexProp {
   label?: string;
   value: number | string | number[] | string[];
   onChange: (value: any) => void;
@@ -17,6 +17,7 @@ export interface IFieldSelectProps extends PropsResolver<IFieldTextProps>, IFlow
   formatValueDisplay?: (selectedOptions: IFieldSelectOption[]) => string;
   marginBottom?: boolean;
   multiple?: boolean;
+  fullscreen?: boolean;
   searchable?: boolean;
 }
 
