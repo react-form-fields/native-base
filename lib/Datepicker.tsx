@@ -49,13 +49,17 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
   );
 
   const handleTouchEnd = React.useCallback(() => {
+    if (props.editable === false) {
+      return;
+    }
+
     if (openCanceled) {
       setOpenCanceled(false);
       return;
     }
 
     setShowPicker(true);
-  }, [openCanceled]);
+  }, [openCanceled, props.editable]);
 
   const handleClear = React.useCallback(() => onChange(null), [onChange]);
 
@@ -97,6 +101,8 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
         editable={false}
         rightIcon={value ? rightIcon : null}
         rightIconAction={props.rightIconAction || handleClear}
+        _onLabelPress={handleTouchEnd}
+        _disabled={props.editable === false}
       />
 
       <DateTimePicker

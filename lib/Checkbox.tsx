@@ -17,6 +17,7 @@ export interface IFieldCheckboxProps extends PropsResolver<NativeBase.CheckBox, 
   onChange: (value: boolean) => void;
   marginBottom?: boolean;
   helperText?: string;
+  disabled?: boolean;
 }
 
 const FieldCheckbox = React.memo((props: IFieldCheckboxProps) => {
@@ -35,7 +36,7 @@ const FieldCheckbox = React.memo((props: IFieldCheckboxProps) => {
   return (
     <ThemeProvider>
       <View style={marginBottom ? styles.margin : null}>
-        <TouchableEffect onPress={onChangeHandler}>
+        <TouchableEffect onPress={onChangeHandler} disabled={props.disabled}>
           <View>
             <View style={styles.row}>
               <CheckBox {...otherProps} checked={value} style={styles.checkbox} onPress={onChangeHandler} />

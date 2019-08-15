@@ -2,7 +2,7 @@ import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
 import useValidation from '@react-form-fields/core/hooks/useValidation';
 import { PropsResolver } from '@react-form-fields/core/interfaces/props';
 import * as React from 'react';
-import { NativeTouchEvent, TouchableOpacity } from 'react-native';
+import { NativeTouchEvent } from 'react-native';
 
 import useFieldFlow, { IFlowIndexProp } from '../hooks/useFieldFlow';
 import ThemeProvider from '../shared/ThemeProvider';
@@ -61,13 +61,17 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
   );
 
   const handleTouchEnd = React.useCallback(() => {
+    if (props.editable === false) {
+      return;
+    }
+
     if (openCanceled) {
       setOpenCanceled(false);
       return;
     }
 
     setVisibility(true);
-  }, [openCanceled]);
+  }, [openCanceled, props.editable]);
 
   const handleDone = React.useCallback(
     (value: any) => {
@@ -88,25 +92,25 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
 
   return (
     <ThemeProvider>
-      <TouchableOpacity onPress={handleTouchEnd}>
-        <FieldText
-          {...otherProps}
-          label={label}
-          ref={null}
-          value={displayValue}
-          validation={null}
-          errorMessage={showError ? errorMessage : null}
-          onChange={nullCallback}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onTouchMove={handleTouchMove}
-          flowIndex={null}
-          tabIndex={null}
-          editable={false}
-          rightIcon={rightIcon}
-          rightIconAction={handleTouchEnd}
-        />
-      </TouchableOpacity>
+      <FieldText
+        {...otherProps}
+        label={label}
+        ref={null}
+        value={displayValue}
+        validation={null}
+        errorMessage={showError ? errorMessage : null}
+        onChange={nullCallback}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
+        flowIndex={null}
+        tabIndex={null}
+        editable={false}
+        rightIcon={rightIcon}
+        rightIconAction={handleTouchEnd}
+        _onLabelPress={handleTouchEnd}
+        _disabled={props.editable === false}
+      />
 
       <Modal {...props} ref={null} visible={visible} handleDismiss={handleDismiss} handleDone={handleDone} />
     </ThemeProvider>

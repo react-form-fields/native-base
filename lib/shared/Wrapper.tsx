@@ -1,5 +1,5 @@
 import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
-import { Icon, Item, Label, NativeBase } from 'native-base';
+import { Icon, Item, Label, NativeBase, Spinner } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -12,10 +12,13 @@ export interface IWrapperProps extends React.Props<{}> {
   helperText?: string;
   LabelProps?: NativeBase.Label;
   ItemProps?: NativeBase.Item;
+  loading?: boolean;
   leftIcon?: string;
   leftIconAction?: (e?: any) => void;
   rightIcon?: string;
   rightIconAction?: (e?: any) => void;
+  _onLabelPress?: (e?: any) => void;
+  _disabled?: boolean;
 }
 
 const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readonly?: boolean }) => {
@@ -24,22 +27,29 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
   return (
     <View style={props.marginBottom ? styles.margin : null}>
       <ThemeProvider>
-        <Item {...(config.itemProps || {})} {...(props.ItemProps || {})} error={props.showError && !props.isValid}>
+        <Item
+          disabled={props._disabled}
+          {...(config.itemProps || {})}
+          {...(props.ItemProps || {})}
+          error={props.showError && !props.isValid}
+        >
           {!!props.leftIcon && (
             <Icon {...(config.iconProps || {})} name={props.leftIcon} onPress={props.leftIconAction} />
           )}
 
           {!!props.label && (
-            <Label {...(config.labelProps || {})} {...(props.LabelProps || {})}>
+            <Label {...(config.labelProps || {})} {...(props.LabelProps || {})} onPress={props._onLabelPress}>
               {props.label}
             </Label>
           )}
 
           {props.children}
 
-          {!!props.rightIcon && (
+          {!!props.rightIcon && !props.loading && (
             <Icon {...(config.iconProps || {})} name={props.rightIcon} onPress={props.rightIconAction} />
           )}
+
+          {!!props.loading && <Spinner size={'small'} style={styles.spinner} />}
         </Item>
         <ErrorMessage
           isValid={props.isValid}
@@ -55,6 +65,10 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
 const styles = StyleSheet.create({
   margin: {
     marginBottom: 20
+  },
+  spinner: {
+    height: 23,
+    width: 23
   }
 });
 

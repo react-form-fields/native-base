@@ -18,6 +18,7 @@ export interface IFieldRadioProps extends PropsResolver<NativeBase.Radio, 'statu
   onChange: (radioValue: any) => void;
   helperText?: string;
   marginBottom?: boolean;
+  disabled?: boolean;
 }
 
 const FieldRadio = React.memo((props: IFieldRadioProps) => {
@@ -36,7 +37,7 @@ const FieldRadio = React.memo((props: IFieldRadioProps) => {
   return (
     <ThemeProvider>
       <View style={marginBottom ? styles.margin : null}>
-        <TouchableEffect onPress={onChangeHandler}>
+        <TouchableEffect onPress={onChangeHandler} disabled={props.disabled}>
           <View>
             <View style={styles.row}>
               <View style={styles.radio}>

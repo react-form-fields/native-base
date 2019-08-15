@@ -10,10 +10,12 @@ import FieldSwitch from '@react-form-fields/native-base/Switch';
 import FieldText from '@react-form-fields/native-base/Text';
 import ValidationContext from '@react-form-fields/native-base/ValidationContext';
 import * as Font from 'expo-font';
-import { Body, Button, Container, Content, Header, Root, Text, Title, Toast, View } from 'native-base';
+import { Body, Button, Container, Content, Header, Root, Subtitle, Text, Title, Toast, View } from 'native-base';
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-const configInitial = new ConfigBuilder().fromLang(langConfig).build();
+const configInitial = new ConfigBuilder()
+  .fromLang(langConfig)
+  .build();
 
 const App = memo(() => {
   const validationRef = useRef<IValidationContextRef>();
@@ -59,12 +61,13 @@ const App = memo(() => {
       <Root>
         <Header>
           <Body>
-            <Title>Header</Title>
+            <Title>React Form Fields</Title>
+            <Subtitle>NativeBase</Subtitle>
           </Body>
         </Header>
 
         <Content>
-          <View style={{padding: 20}}>
+          <View style={{ padding: 20 }}>
             <ConfigProvider value={config}>
               <ValidationContext ref={validationRef}>
                 <FieldSwitch
@@ -97,9 +100,80 @@ const App = memo(() => {
                   marginBottom
                 />
 
-                <FieldSelect
-                  label='Select FullScreen'
+                <FieldText
+                  label='Text'
+                  helperText='just a helper text'
+                  value={value}
+                  onChange={setValue}
+                  flowIndex={2}
+                  validation='required|string|min:3|max:10'
+                  marginBottom
+                />
+
+                <FieldText
+                  label='Password'
+                  value={value}
+                  onChange={setValue}
+                  flowIndex={3}
+                  validation='required|string|min:3|max:10'
+                  leftIcon='lock'
+                  secureTextEntry={true}
+                  marginBottom
+                />
+
+                <FieldText
+                  label='Money'
+                  mask='money'
+                  keyboardType='number-pad'
+                  flowIndex={4}
+                  value={valueMoney}
+                  validation='numeric|min:3|max:10'
+                  leftIcon='cash'
+                  onChange={setValueMoney}
+                  marginBottom
+                />
+
+                <FieldText
+                  label='Text Loading'
+                  value={value}
+                  onChange={setValue}
+                  flowIndex={5}
+                  marginBottom
+                  loading={true}
+                />
+
+                <FieldDatepicker
+                  label='Date'
+                  flowIndex={6}
+                  value={valueDate}
+                  onChange={setValueDate}
+                  validation='required|date'
+                  marginBottom
+                />
+
+                <FieldDatepicker
+                  label='DateTime'
+                  mode='datetime'
+                  flowIndex={7}
+                  value={valueDate}
+                  onChange={setValueDate}
+                  validation='required|date'
+                  marginBottom
+                />
+
+                <FieldDatepicker
+                  label='Time'
+                  mode='time'
                   flowIndex={8}
+                  value={valueDate}
+                  onChange={setValueDate}
+                  validation='required|date'
+                  marginBottom
+                />
+
+                <FieldSelect
+                  label='Select FullScreen Searchable'
+                  flowIndex={9}
                   value={valueSelect}
                   options={selectOptions}
                   onChange={setValueSelect}
@@ -111,75 +185,27 @@ const App = memo(() => {
 
                 <FieldSelect
                   label='Select Multiple'
-                  flowIndex={8}
+                  flowIndex={10}
                   value={valueSelectMultiple}
                   options={selectOptions}
                   onChange={setValueSelectMultiple}
                   validation='required|date'
                   marginBottom
+                  editable={false}
                   multiple
                 />
-                
-                <FieldText
-                  label='Text'
-                  helperText='just a helper text'
-                  value={value}
-                  onChange={setValue}
-                  flowIndex={4}
-                  validation='required|string|min:3|max:10'
-                  marginBottom
-                />
 
-                <FieldText
-                  label='Password'
-                  value={value}
-                  onChange={setValue}
-                  flowIndex={4}
-                  validation='required|string|min:3|max:10'
-                  leftIcon='lock'
-                  secureTextEntry={true}
-                  marginBottom
-                />
-
-                <FieldText
-                  label='Money'
-                  mask='money'
-                  keyboardType='number-pad'
-                  flowIndex={3}
-                  value={valueMoney}
-                  validation='numeric|min:3|max:10'
-                  leftIcon='cash'
-                  onChange={setValueMoney}
-                  marginBottom
-                />
-
-                <FieldDatepicker
-                  label='Date'
-                  flowIndex={5}
-                  value={valueDate}
-                  onChange={setValueDate}
+                <FieldSelect
+                  label='Select Custom Display'
+                  flowIndex={11}
+                  value={valueSelect}
+                  options={selectOptions}
+                  onChange={setValueSelect}
                   validation='required|date'
+                  formatValueDisplay={(items) => `${items.length} items`}
+                  multiple
                   marginBottom
-                />
-
-                <FieldDatepicker
-                  label='DateTime'
-                  mode='datetime'
-                  flowIndex={6}
-                  value={valueDate}
-                  onChange={setValueDate}
-                  validation='required|date'
-                  marginBottom
-                />
-
-                <FieldDatepicker
-                  label='Time'
-                  mode='time'
-                  flowIndex={7}
-                  value={valueDate}
-                  onChange={setValueDate}
-                  validation='required|date'
-                  marginBottom
+                  searchable
                 />
 
                 <Button block onPress={handleSave}>

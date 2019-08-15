@@ -24,7 +24,17 @@ export interface IFieldTextProps extends PropsResolver<NativeBase.Input>, IFlowI
 
 const FieldText = React.memo(
   React.forwardRef<IFieldTextRef, IFieldTextProps>((props, ref) => {
-    const { onChange, marginBottom, helperText, onSubmitEditing, returnKeyType, displayValue, leftIcon } = props;
+    const {
+      onChange,
+      _onLabelPress: onLabelPress,
+      marginBottom,
+      helperText,
+      onSubmitEditing,
+      returnKeyType,
+      loading,
+      displayValue,
+      leftIcon
+    } = props;
 
     const config = useConfigContext();
     const { setDirty, showError, errorMessage, isValid } = useValidation(props);
@@ -112,6 +122,9 @@ const FieldText = React.memo(
         leftIcon={leftIcon}
         rightIcon={rightIconComponent}
         rightIconAction={rightIconAction}
+        loading={loading}
+        _onLabelPress={onLabelPress}
+        _disabled={props._disabled !== undefined ? props._disabled : props.editable === false}
       >
         <Input
           {...otherProps}

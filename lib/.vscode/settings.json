@@ -25,20 +25,21 @@
     "**/*.js": {
       "when": "$(basename).ts"
     },
-    "**/*.d.ts": {
-      "when": "$(basename).ts"
-    },
     "**/*?.js": {
       "when": "$(basename).tsx"
     },
     "components/**/*.d.ts": true,
     "decorators/**/*.d.ts": true,
+    "ConfigProvider/**/*.d.ts": true,
+    "shared/**/*.d.ts": true,
+    "Select/**/*.d.ts": true,
+    "hooks/**/*.d.ts": true,
     "mask/**/*.d.ts": true,
     "validator/**/*.d.ts": true,
     "interfaces/**/*.d.ts": true,
     "helpers/**/*.d.ts": true,
     "*.d.ts": true,
-    "declarations/**/*.d.ts": false,
+    "declarations/*.d.ts": false,
     "**/*.map": {
       "when": "$(basename)"
     }
