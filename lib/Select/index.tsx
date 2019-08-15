@@ -88,7 +88,16 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
 
   React.useEffect(() => () => setVisibility(false), []);
 
-  const rightIcon = React.useMemo(() => config.select.icon || 'ios-arrow-down', [config.select.icon]);
+  const rightIcon = React.useMemo(() => props.rightIcon || config.select.icon || 'ios-arrow-down', [
+    config.select.icon,
+    props.rightIcon
+  ]);
+
+  const rightIconAction = React.useMemo(() => (props.rightIcon ? props.rightIconAction : null) || handleTouchEnd, [
+    handleTouchEnd,
+    props.rightIcon,
+    props.rightIconAction
+  ]);
 
   return (
     <ThemeProvider>
@@ -107,7 +116,7 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
         tabIndex={null}
         editable={false}
         rightIcon={rightIcon}
-        rightIconAction={handleTouchEnd}
+        rightIconAction={rightIconAction}
         _onLabelPress={handleTouchEnd}
         _disabled={props.editable === false}
       />
