@@ -23,6 +23,9 @@ export interface IWrapperProps extends React.Props<{}> {
 
 const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readonly?: boolean }) => {
   const config = useConfigContext();
+  const loadingStyle = React.useMemo(() => {
+    return [styles.spinner, config.loadingStyle];
+  }, [config.loadingStyle]);
 
   return (
     <View style={props.marginBottom ? styles.margin : null}>
@@ -49,7 +52,7 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
             <Icon {...(config.iconProps || {})} name={props.rightIcon} onPress={props.rightIconAction} />
           )}
 
-          {!!props.loading && <Spinner size={'small'} style={styles.spinner} />}
+          {!!props.loading && <Spinner size={'small'} style={loadingStyle} {...(config.loadingProps || {})} />}
         </Item>
         <ErrorMessage
           isValid={props.isValid}

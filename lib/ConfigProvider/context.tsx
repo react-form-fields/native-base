@@ -1,6 +1,6 @@
 import FieldValidationConfigContextCore from '@react-form-fields/core/ConfigProvider';
 import { NativeBase } from 'native-base';
-import { TextStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export { IConfig } from '@react-form-fields/core/ConfigProvider';
 
@@ -12,6 +12,8 @@ declare module '@react-form-fields/core/ConfigProvider/context' {
     iconProps?: Partial<NativeBase.Icon>;
     errorStyle?: TextStyle;
     helperTextStyle?: TextStyle;
+    loadingProps?: NativeBase.Spinner;
+    loadingStyle?: StyleProp<ViewStyle>;
     select?: {
       icon?: string;
       searchIcon?: string;

@@ -1,5 +1,6 @@
 import CoreConfigBuilder from '@react-form-fields/core/ConfigProvider/builder';
 import { NativeBase } from 'native-base';
+import { StyleProp, ViewStyle } from 'react-native';
 
 import { IConfig } from './context';
 
@@ -25,6 +26,11 @@ export default class ConfigBuilder extends CoreConfigBuilder {
 
   public setItemProps(itemProps: NativeBase.Item) {
     this.config = { ...this.config, itemProps };
+    return this;
+  }
+
+  public setLoadingProps(loadingProps: NativeBase.Spinner, loadingStyle: StyleProp<ViewStyle>) {
+    this.config = { ...this.config, loadingProps, loadingStyle };
     return this;
   }
 
