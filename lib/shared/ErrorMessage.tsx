@@ -8,7 +8,7 @@ import { ThemeContext } from './ThemeProvider/context';
 export interface IErrorMessageProps {
   isValid: boolean;
   showError: boolean;
-  helperText: string;
+  helperText?: string;
   errorMessage: string;
 }
 
