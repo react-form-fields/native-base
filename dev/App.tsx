@@ -191,16 +191,15 @@ const App = memo(() => {
                   onChange={setValueSelectMultiple}
                   validation='required|date'
                   marginBottom
-                  editable={false}
                   multiple
                 />
 
                 <FieldSelect
                   label='Select Custom Display'
                   flowIndex={11}
-                  value={valueSelect}
+                  value={valueSelectMultiple}
                   options={selectOptions}
-                  onChange={setValueSelect}
+                  onChange={setValueSelectMultiple}
                   validation='required|date'
                   formatValueDisplay={(items) => `${items.length} items`}
                   multiple
