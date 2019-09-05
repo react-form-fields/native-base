@@ -26,6 +26,7 @@ import {
 } from 'react-native';
 
 import { IFieldSelectProps } from '.';
+import { ThemeContext } from '../shared/ThemeProvider/context';
 import List from './List';
 
 export interface IModalProps extends IFieldSelectProps {
@@ -48,9 +49,9 @@ const Modal = React.memo(
       handleDismiss: handleDismissProp
     } = props;
 
+    const themeContext = React.useContext(ThemeContext);
     const config = useConfigContext();
     config.select = config.select || ({} as any);
-
     const [query, setQuery] = React.useState('');
     const [scrollAreaStyle, setScrollAreaStyle] = React.useState<ViewStyle>(styles.scrollArea);
     const [internalValue, setInternalValue] = React.useState<Set<string | number>>(new Set());
@@ -122,7 +123,12 @@ const Modal = React.memo(
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null} style={styles.keyboardView}>
           <View style={styles.modalBackdrop}>
             <Container style={modalContainerStyles}>
-              <Header searchBar={searchable} rounded={searchable} style={modalHeaderStyles}>
+              <Header
+                iosBarStyle={themeContext.iosStatusbar as any}
+                searchBar={searchable}
+                rounded={searchable}
+                style={modalHeaderStyles}
+              >
                 {searchable ? (
                   <Item>
                     <Icon {...(config.iconProps || {})} name={config.select.searchIcon || 'search'} />
