@@ -737,10 +737,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@react-form-fields/core@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/core/-/core-2.3.1.tgz#be90b521e5c77ad79c5fedda5d2f42b9471e7910"
-  integrity sha512-z+WB3FKnEamRTLKzv6QMAkK8230XcLAwlQpkpg255sYYz8kEKJETqeAXQ6LYkVCi6rMTRdHBcjlGQsheEbwB4Q==
+"@react-form-fields/core@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/core/-/core-2.5.0.tgz#0f975346a6529e19ce3227dc33dfafe547726b33"
+  integrity sha512-awU01/bsq+QfMDg/aIJRZN3WRFYdQuuyMVlsgSiAZ6mVJkwbcj3eR5RpvRXj+aUCowe7EZ8/+9mPUnDZf8SdYQ==
   dependencies:
     "@types/validatorjs" "^3.15.0"
     intl "^1.2.5"
