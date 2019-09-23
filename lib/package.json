@@ -11,7 +11,7 @@
     "validation",
     "mobile"
   ],
-  "version": "2.4.0",
+  "version": "2.4.1",
   "main": "./index.js",
   "types": "./index.d.ts",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "lint": "yarn eslint \"./**/*.ts\" \"./**/*.tsx\""
   },
   "dependencies": {
-    "@react-form-fields/core": "^2.5.0",
+    "@react-form-fields/core": "^2.5.1",
     "date-fns": "^2.0.0-alpha.21",
     "native-base": ">=2.0.0",
     "react-native-modal-datetime-picker": "^7.5.0",

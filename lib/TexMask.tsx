@@ -1,11 +1,8 @@
-import TextMaskCore from '@react-form-fields/core/TextMask';
+import TextMaskCore, { ITextMaskProps as ITextMaskCoreProps } from '@react-form-fields/core/TextMask';
 import { NativeBase, Text } from 'native-base';
 import * as React from 'react';
 
-export interface ITextMaskProps extends NativeBase.Text {
-  children: string;
-  mask: string;
-}
+export interface ITextMaskProps extends NativeBase.Text, ITextMaskCoreProps {}
 
 const TextMask = React.memo<ITextMaskProps>(({ mask, children, ...props }) => {
   return (
