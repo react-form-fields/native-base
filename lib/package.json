@@ -11,7 +11,7 @@
     "validation",
     "mobile"
   ],
-  "version": "2.4.2",
+  "version": "2.5.0",
   "main": "./index.js",
   "types": "./index.d.ts",
   "license": "MIT",
@@ -44,23 +44,23 @@
     "native-base": ">=2.0.0"
   },
   "devDependencies": {
-    "@types/node": "12.6.2",
-    "@types/prop-types": "15.7.1",
-    "@types/react": "16.8.23",
-    "@types/react-native": "0.60.0",
+    "@types/node": "12.7.11",
+    "@types/prop-types": "15.7.3",
+    "@types/react": "16.9.5",
+    "@types/react-native": "0.60.19",
     "@types/uuid": "3.4.5",
-    "@typescript-eslint/eslint-plugin": "1.11.0",
-    "@typescript-eslint/parser": "1.11.0",
-    "concurrently": "4.1.1",
-    "eslint": "6.0.1",
-    "eslint-config-prettier": "6.0.0",
-    "eslint-plugin-prettier": "3.1.0",
-    "eslint-plugin-react": "7.14.2",
-    "eslint-plugin-react-hooks": "1.6.1",
-    "husky": "3.0.0",
+    "@typescript-eslint/eslint-plugin": "2.3.3",
+    "@typescript-eslint/parser": "2.3.3",
+    "concurrently": "5.0.0",
+    "eslint": "6.5.1",
+    "eslint-config-prettier": "6.4.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "eslint-plugin-react": "7.16.0",
+    "eslint-plugin-react-hooks": "2.1.2",
+    "husky": "3.0.8",
     "prettier": "1.18.2",
-    "react": "16.8.6",
-    "react-native": "0.60.3",
-    "typescript": "3.5.3"
+    "react": "16.10.2",
+    "react-native": "0.61.2",
+    "typescript": "3.6.3"
   }
 }
