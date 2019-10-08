@@ -57,8 +57,8 @@ const App = memo(() => {
   if (!loaded) return null;
 
   return (
-    <Container>
-      <Root>
+    <Root>
+      <Container>
         <Header>
           <Body>
             <Title>React Form Fields</Title>
@@ -214,8 +214,8 @@ const App = memo(() => {
             </ConfigProvider>
           </View>
         </Content>
-      </Root>
-    </Container>
+      </Container>
+    </Root>
   );
 });
 

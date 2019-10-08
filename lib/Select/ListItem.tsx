@@ -23,10 +23,10 @@ const ListItem = React.memo((props: IListItemProps) => {
   );
 
   if (multiple) {
-    return <Checkbox label={item.label} value={value.has(item.value)} marginBottom onChange={handleChange} />;
+    return <Checkbox label={item.label} value={value.has(item.value)} extraPadding onChange={handleChange} />;
   }
 
-  return <Radio label={item.label} radioValue={item.value} value={firstValue} onChange={handleChange} marginBottom />;
+  return <Radio label={item.label} radioValue={item.value} extraPadding value={firstValue} onChange={handleChange} />;
 });
 
 export default ListItem;

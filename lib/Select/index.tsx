@@ -2,7 +2,6 @@ import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
 import useValidation from '@react-form-fields/core/hooks/useValidation';
 import { PropsResolver } from '@react-form-fields/core/interfaces/props';
 import * as React from 'react';
-import { NativeTouchEvent } from 'react-native';
 
 import useFieldFlow, { IFlowIndexProp } from '../hooks/useFieldFlow';
 import ThemeProvider from '../shared/ThemeProvider';
@@ -32,8 +31,6 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
   const { label, options, value, onChange, formatValueDisplay, ...otherProps } = props;
 
   const [visible, setVisibility] = React.useState(false);
-  const [touchStart, setTouchStart] = React.useState<NativeTouchEvent>(null);
-  const [openCanceled, setOpenCanceled] = React.useState(false);
 
   const config = useConfigContext();
   config.select = config.select || ({} as any);
@@ -48,30 +45,9 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
     return selectedValues.length > 3 ? `${selectedValues.length} items` : selectedValues.map(o => o.label).join(', ');
   }, [value, options, formatValueDisplay]);
 
-  const handleTouchStart = React.useCallback((e: { nativeEvent: NativeTouchEvent }) => {
-    setTouchStart(e.nativeEvent);
-  }, []);
-
-  const handleTouchMove = React.useCallback(
-    (e: { nativeEvent: NativeTouchEvent }) => {
-      const y = e.nativeEvent.locationY - touchStart.locationY;
-      if (y > 5 || y < -5) setOpenCanceled(true);
-    },
-    [touchStart]
-  );
-
-  const handleTouchEnd = React.useCallback(() => {
-    if (props.editable === false) {
-      return;
-    }
-
-    if (openCanceled) {
-      setOpenCanceled(false);
-      return;
-    }
-
+  const handlePress = React.useCallback(() => {
     setVisibility(true);
-  }, [openCanceled, props.editable]);
+  }, []);
 
   const handleDone = React.useCallback(
     (value: any) => {
@@ -93,8 +69,8 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
     props.rightIcon
   ]);
 
-  const rightIconAction = React.useMemo(() => (props.rightIcon ? props.rightIconAction : null) || handleTouchEnd, [
-    handleTouchEnd,
+  const rightIconAction = React.useMemo(() => (props.rightIcon ? props.rightIconAction : null) || handlePress, [
+    handlePress,
     props.rightIcon,
     props.rightIconAction
   ]);
@@ -109,15 +85,13 @@ const FieldSelect = React.memo((props: IFieldSelectProps) => {
         validation={null}
         errorMessage={showError ? errorMessage : null}
         onChange={nullCallback}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchMove={handleTouchMove}
         flowIndex={null}
         tabIndex={null}
         editable={false}
         rightIcon={rightIcon}
         rightIconAction={rightIconAction}
-        _onLabelPress={handleTouchEnd}
+        _onPress={handlePress}
+        _onLabelPress={handlePress}
         _disabled={props.editable === false}
       />
 

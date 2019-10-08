@@ -1,7 +1,7 @@
 import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
 import { Icon, Item, Label, NativeBase, Spinner } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import ErrorMessage, { IErrorMessageProps } from './ErrorMessage';
 import ThemeProvider from './ThemeProvider';
@@ -18,6 +18,7 @@ export interface IWrapperProps extends React.Props<{}> {
   rightIcon?: string;
   rightIconAction?: (e?: any) => void;
   _onLabelPress?: (e?: any) => void;
+  _onPress?: (e?: any) => void;
   _disabled?: boolean;
 }
 
@@ -26,6 +27,14 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
   const loadingStyle = React.useMemo(() => {
     return [styles.spinner, config.loadingStyle];
   }, [config.loadingStyle]);
+
+  const children = props._onPress ? (
+    <TouchableOpacity style={styles.touchable} onPress={props._onPress}>
+      {props.children}
+    </TouchableOpacity>
+  ) : (
+    props.children
+  );
 
   return (
     <View style={props.marginBottom ? styles.margin : null}>
@@ -46,7 +55,7 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
             </Label>
           )}
 
-          {props.children}
+          {children}
 
           {!!props.rightIcon && !props.loading && (
             <Icon {...(config.iconProps || {})} name={props.rightIcon} onPress={props.rightIconAction} />
@@ -72,6 +81,9 @@ const styles = StyleSheet.create({
   spinner: {
     height: 23,
     width: 23
+  },
+  touchable: {
+    flex: 1
   }
 });
 

@@ -1,5 +1,7 @@
+import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
+import { Text, View } from 'native-base';
 import * as React from 'react';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 
 import { IFieldSelectOption } from '.';
 import SelectContext, { ISelectContext } from './context';
@@ -9,10 +11,14 @@ import { IModalProps } from './Modal';
 export interface IListProps extends IModalProps {
   internalValue: Set<any>;
   setInternalValue: Function;
+  renderOptions: boolean;
 }
 
 const List = React.memo((props: IListProps) => {
   const { multiple, options, internalValue, setInternalValue } = props;
+
+  const config = useConfigContext();
+  config.select = config.select || ({} as any);
 
   const renderItem = React.useCallback(
     ({ item }: ListRenderItemInfo<IFieldSelectOption>) => <ListItem item={item} />,
@@ -40,9 +46,32 @@ const List = React.memo((props: IListProps) => {
 
   return (
     <SelectContext.Provider value={contextValue}>
-      <FlatList data={options} keyExtractor={keyExtractor} renderItem={renderItem} />
+      <View style={styles.container}>
+        <FlatList
+          data={props.renderOptions ? options : []}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          maxToRenderPerBatch={2}
+          ListEmptyComponent={
+            !!props.renderOptions && <Text style={styles.notFound}>{config.select.notFound || 'Not found'}</Text>
+          }
+        />
+      </View>
     </SelectContext.Provider>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  notFound: {
+    textAlign: 'center',
+    fontSize: 16,
+    padding: 16,
+    fontStyle: 'italic',
+    opacity: 0.8
+  }
 });
 
 export default List;

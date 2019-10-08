@@ -1,28 +1,14 @@
 import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
-import {
-  Body,
-  Button,
-  connectStyle,
-  Container,
-  Content,
-  Footer,
-  Header,
-  Icon,
-  Input,
-  Item,
-  Text,
-  Title
-} from 'native-base';
+import { Body, Button, connectStyle, Container, Footer, Header, Icon, Input, Item, Text, Title } from 'native-base';
 import * as React from 'react';
 import {
   Dimensions,
-  Keyboard,
+  InteractionManager,
   KeyboardAvoidingView,
   Modal as ReactNativeModal,
   Platform,
   StyleSheet,
   View,
-  ViewStyle
 } from 'react-native';
 
 import { IFieldSelectProps } from '.';
@@ -52,8 +38,9 @@ const Modal = React.memo(
     const themeContext = React.useContext(ThemeContext);
     const config = useConfigContext();
     config.select = config.select || ({} as any);
+
+    const [renderOptions, setRenderOptions] = React.useState(false);
     const [query, setQuery] = React.useState('');
-    const [scrollAreaStyle, setScrollAreaStyle] = React.useState<ViewStyle>(styles.scrollArea);
     const [internalValue, setInternalValue] = React.useState<Set<string | number>>(new Set());
     const firstValue = React.useMemo(() => internalValue.values().next().value, [internalValue]);
 
@@ -76,30 +63,17 @@ const Modal = React.memo(
       return !query ? options || [] : (options || []).filter(o => o.label.includes(query));
     }, [options, query]);
 
-    const modalActionStyles = React.useMemo(() => ({ ...styles.modalActions }), []);
-    const modalHeaderStyles = React.useMemo(() => [props.fullscreen ? null : styles.header], [props.fullscreen]);
+    const modalHeaderStyles = React.useMemo(() => [styles.header, !props.fullscreen ? styles.headerContained : null], [
+      props.fullscreen
+    ]);
     const modalContainerStyles = React.useMemo(
       () => [styles.modalContainer, props.fullscreen ? null : styles.modalContainerContained],
       [props.fullscreen]
     );
 
-    React.useEffect(() => {
-      const eventShow = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', e => {
-        setScrollAreaStyle({
-          ...scrollAreaStyle,
-          maxHeight: Dimensions.get('screen').height - e.endCoordinates.height
-        });
-      });
-
-      const eventHide = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', () => {
-        setScrollAreaStyle({ ...scrollAreaStyle, maxHeight: Dimensions.get('screen').height - 100 });
-      });
-
-      return () => {
-        eventShow.remove();
-        eventHide.remove();
-      };
-    }, [scrollAreaStyle, setScrollAreaStyle]);
+    const handleOnShow = React.useCallback(() => {
+      InteractionManager.runAfterInteractions(() => setRenderOptions(true));
+    }, []);
 
     const handleDone = React.useCallback(() => {
       setQuery('');
@@ -108,6 +82,7 @@ const Modal = React.memo(
 
     const handleDismiss = React.useCallback(() => {
       setQuery('');
+      setRenderOptions(false);
       handleDismissProp();
     }, [handleDismissProp]);
 
@@ -115,6 +90,7 @@ const Modal = React.memo(
       <ReactNativeModal
         visible={visible}
         onRequestClose={handleDismiss}
+        onShow={handleOnShow}
         transparent={true}
         animated={true}
         animationType={props.fullscreen ? 'slide' : 'fade'}
@@ -140,20 +116,16 @@ const Modal = React.memo(
                   </Body>
                 )}
               </Header>
-              <Content style={scrollAreaStyle} padder>
-                <List
-                  {...props}
-                  ref={null}
-                  options={filteredOptions}
-                  internalValue={internalValue}
-                  setInternalValue={setInternalValue}
-                />
-                {!filteredOptions.length && (
-                  <Text style={styles.notFound}>{(config.select || { notFound: 'Not found' }).notFound}</Text>
-                )}
-              </Content>
-              <Footer style={modalActionStyles}>
-                <Button transparent dark onPress={handleDismiss}>
+              <List
+                {...props}
+                ref={null}
+                options={filteredOptions}
+                internalValue={internalValue}
+                setInternalValue={setInternalValue}
+                renderOptions={renderOptions}
+              />
+              <Footer style={styles.modalActions}>
+                <Button dark transparent onPress={handleDismiss}>
                   <Text>{(config.select || { cancel: 'Cancel' }).cancel}</Text>
                 </Button>
                 <Button transparent onPress={handleDone}>
@@ -173,6 +145,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
+    backgroundColor: 'white'
+  },
+  headerContained: {
     paddingTop: 0
   },
   headerSearchTitle: {
@@ -210,17 +185,8 @@ const styles = StyleSheet.create({
   modalActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'white',
     padding: 8
-  },
-  notFound: {
-    textAlign: 'center',
-    fontSize: 16,
-    fontStyle: 'italic',
-    opacity: 0.8
-  },
-  scrollArea: {
-    maxHeight: Dimensions.get('screen').height - 100,
-    paddingHorizontal: 0
   },
   scrollView: {
     paddingVertical: 10,

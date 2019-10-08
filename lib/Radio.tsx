@@ -17,17 +17,25 @@ export interface IFieldRadioProps extends PropsResolver<NativeBase.Radio, 'statu
   radioValue: string | number;
   onChange: (radioValue: any) => void;
   helperText?: string;
+  extraPadding?: boolean;
   marginBottom?: boolean;
   disabled?: boolean;
 }
 
 const FieldRadio = React.memo((props: IFieldRadioProps) => {
-  const { onChange, label, helperText, value, marginBottom, radioValue } = props;
+  const { onChange, label, helperText, value, marginBottom, radioValue, extraPadding } = props;
 
   const config = useConfigContext();
   const { setDirty, showError, errorMessage, isValid } = useValidation(props);
   const otherProps = useMemoOtherProps(props, 'value', 'onChange', 'label', 'styleError', 'marginBottom', 'radioValue');
   useFieldFlow(props, React.useCallback(() => {}, []));
+
+  const classes = React.useMemo(() => {
+    return {
+      radio: StyleSheet.flatten([styles.radio, extraPadding ? styles.radioPadding : null]),
+      row: StyleSheet.flatten([styles.row, extraPadding ? styles.rowPadding : null])
+    };
+  }, [extraPadding]);
 
   const onChangeHandler = React.useCallback(() => {
     config.validationOn === 'onChange' && setDirty(true);
@@ -39,8 +47,8 @@ const FieldRadio = React.memo((props: IFieldRadioProps) => {
       <View style={marginBottom ? styles.margin : null}>
         <TouchableEffect onPress={onChangeHandler} disabled={props.disabled}>
           <View>
-            <View style={styles.row}>
-              <View style={styles.radio}>
+            <View style={classes.row}>
+              <View style={classes.radio}>
                 <Radio {...otherProps} selected={value === radioValue} onPress={onChangeHandler} />
               </View>
               <View style={styles.textContainer}>
@@ -64,11 +72,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  radioPadding: {
+    paddingLeft: 16
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 8
+  },
+  rowPadding: {
+    paddingVertical: 16
   },
   textContainer: {
     flexGrow: 1,

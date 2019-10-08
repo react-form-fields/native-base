@@ -27,6 +27,7 @@ const FieldText = React.memo(
     const {
       onChange,
       _onLabelPress: onLabelPress,
+      _onPress: onPress,
       marginBottom,
       helperText,
       onSubmitEditing,
@@ -124,6 +125,7 @@ const FieldText = React.memo(
         rightIconAction={rightIconAction}
         loading={loading}
         _onLabelPress={onLabelPress}
+        _onPress={onPress}
         _disabled={props._disabled !== undefined ? props._disabled : props.editable === false}
       >
         <Input
