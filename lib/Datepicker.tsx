@@ -14,6 +14,7 @@ export interface IFieldDatepickerProps
     PropsResolver<DateTimePickerProps, 'onConfirm' | 'onCancel' | 'isVisible' | 'date'>,
     IFlowIndexProp {
   value: Date;
+  format?: string;
   onChange: (value: Date) => void;
   notClearable?: boolean;
 }
@@ -21,7 +22,7 @@ export interface IFieldDatepickerProps
 const nullCallback = () => {};
 
 const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
-  const { value, onChange, mode, ...otherProps } = props;
+  const { value, onChange, mode, format, ...otherProps } = props;
 
   const [showPicker, setShowPicker] = React.useState(false);
   const [touchStart, setTouchStart] = React.useState<NativeTouchEvent>(null);
@@ -91,7 +92,7 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
         {...otherProps}
         ref={fieldTextRef}
         value={value ? value.toISOString() : null}
-        displayValue={dateFormat(value, mode || 'date', config)}
+        displayValue={dateFormat(value, mode || 'date', config, format)}
         tabIndex={null}
         flowIndex={null}
         onChange={nullCallback}

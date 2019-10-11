@@ -8,12 +8,12 @@ const defaultFormats = {
   dateTime: 'yyyy-MM-dd HH:mm'
 };
 
-export function dateFormat(value: Date, mode: string, config: IConfig): string {
+export function dateFormat(value: Date, mode: string, config: IConfig, customFormat?: string): string {
   if (!value || !(value instanceof Date)) return '';
   if (isNaN(value.getTime())) return '';
 
   const dateConfig = getConfigDate(config);
-  const formatString = dateConfig.formats[mode] || defaultFormats[mode] || mode;
+  const formatString = customFormat || dateConfig.formats[mode] || defaultFormats[mode] || mode;
   return format(value, formatString, dateConfig.dataFnsLocale ? { locale: dateConfig.dataFnsLocale } : null);
 }
 
