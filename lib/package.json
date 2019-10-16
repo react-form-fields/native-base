@@ -11,7 +11,7 @@
     "validation",
     "mobile"
   ],
-  "version": "2.5.3",
+  "version": "2.6.0",
   "main": "./index.js",
   "types": "./index.d.ts",
   "license": "MIT",
@@ -34,11 +34,11 @@
   },
   "dependencies": {
     "@react-form-fields/core": "^2.5.1",
-    "date-fns": "^2.0.0-alpha.21",
+    "date-fns": ">=2.0.0",
     "native-base": ">=2.0.0",
-    "react-native-modal-datetime-picker": "^7.5.0",
-    "tslib": "^1.10.0",
-    "uuid": "^3.3.2"
+    "react-native-modal-datetime-picker": "^7.6.0",
+    "tslib": ">=1.10.0",
+    "uuid": ">=3.0.0"
   },
   "peerDependencies": {
     "native-base": ">=2.0.0"
