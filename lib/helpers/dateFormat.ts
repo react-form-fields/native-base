@@ -14,7 +14,7 @@ export function dateFormat(value: Date, mode: string, config: IConfig, customFor
 
   const dateConfig = getConfigDate(config);
   const formatString = customFormat || dateConfig.formats[mode] || defaultFormats[mode] || mode;
-  return format(value, formatString, dateConfig.dataFnsLocale ? { locale: dateConfig.dataFnsLocale } : null);
+  return (format as any)(value, formatString, dateConfig.dataFnsLocale ? { locale: dateConfig.dataFnsLocale } : null);
 }
 
 function getConfigDate(config: IConfig): IConfig['date'] {

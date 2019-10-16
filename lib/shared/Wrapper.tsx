@@ -17,7 +17,7 @@ export interface IWrapperProps extends React.Props<{}> {
   leftIconAction?: (e?: any) => void;
   rightIcon?: string;
   rightIconAction?: (e?: any) => void;
-  hideErrorMessage: boolean;
+  hideErrorMessage?: boolean;
   _onLabelPress?: (e?: any) => void;
   _onPress?: (e?: any) => void;
   _disabled?: boolean;
