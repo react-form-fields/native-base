@@ -17,6 +17,7 @@ export interface IWrapperProps extends React.Props<{}> {
   leftIconAction?: (e?: any) => void;
   rightIcon?: string;
   rightIconAction?: (e?: any) => void;
+  hideErrorMessage: boolean;
   _onLabelPress?: (e?: any) => void;
   _onPress?: (e?: any) => void;
   _disabled?: boolean;
@@ -65,9 +66,9 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
         </Item>
         <ErrorMessage
           isValid={props.isValid}
-          showError={props.showError}
+          showError={props.hideErrorMessage ? false : props.showError}
           helperText={props.helperText}
-          errorMessage={props.errorMessage}
+          errorMessage={props.hideErrorMessage ? null : props.errorMessage}
         />
       </ThemeProvider>
     </View>

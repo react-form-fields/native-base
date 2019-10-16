@@ -34,6 +34,7 @@ const FieldText = React.memo(
       returnKeyType,
       loading,
       displayValue,
+      hideErrorMessage,
       leftIcon
     } = props;
 
@@ -124,6 +125,7 @@ const FieldText = React.memo(
         rightIcon={rightIconComponent}
         rightIconAction={rightIconAction}
         loading={loading}
+        hideErrorMessage={hideErrorMessage}
         _onLabelPress={onLabelPress}
         _onPress={onPress}
         _disabled={props._disabled !== undefined ? props._disabled : props.editable === false}
