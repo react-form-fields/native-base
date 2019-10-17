@@ -2,7 +2,6 @@ import useConfigContext from '@react-form-fields/core/hooks/useConfigContext';
 import useMemoOtherProps from '@react-form-fields/core/hooks/useMemoOtherProps';
 import { PropsResolver } from '@react-form-fields/core/interfaces/props';
 import * as React from 'react';
-import { NativeTouchEvent } from 'react-native';
 import DateTimePicker, { DateTimePickerProps } from 'react-native-modal-datetime-picker';
 
 import { dateFormat } from './helpers/dateFormat';
@@ -25,8 +24,6 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
   const { value, onChange, mode, format, ...otherProps } = props;
 
   const [showPicker, setShowPicker] = React.useState(false);
-  const [touchStart, setTouchStart] = React.useState<NativeTouchEvent>(null);
-  const [openCanceled, setOpenCanceled] = React.useState(false);
 
   const fieldTextRef = React.useRef<IFieldTextRef>();
   const datePickerProps = useMemoOtherProps(props, 'value', 'onChange');
@@ -37,30 +34,13 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
   const onFocusFlow = React.useCallback(() => {}, []);
   useFieldFlow(props, onFocusFlow);
 
-  const handleTouchStart = React.useCallback((e: { nativeEvent: NativeTouchEvent }) => {
-    setTouchStart(e.nativeEvent);
-  }, []);
-
-  const handleTouchMove = React.useCallback(
-    (e: { nativeEvent: NativeTouchEvent }) => {
-      const y = e.nativeEvent.locationY - touchStart.locationY;
-      if (y > 5 || y < -5) setOpenCanceled(true);
-    },
-    [touchStart]
-  );
-
-  const handleTouchEnd = React.useCallback(() => {
+  const handlePress = React.useCallback(() => {
     if (props.editable === false) {
       return;
     }
 
-    if (openCanceled) {
-      setOpenCanceled(false);
-      return;
-    }
-
     setShowPicker(true);
-  }, [openCanceled, props.editable]);
+  }, [props.editable]);
 
   const handleClear = React.useCallback(() => onChange(null), [onChange]);
 
@@ -96,13 +76,11 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
         tabIndex={null}
         flowIndex={null}
         onChange={nullCallback}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchMove={handleTouchMove}
         editable={false}
         rightIcon={value ? rightIcon : null}
         rightIconAction={props.rightIconAction || handleClear}
-        _onLabelPress={handleTouchEnd}
+        _onLabelPress={handlePress}
+        _onPress={handlePress}
         _disabled={props.editable === false}
       />
 
