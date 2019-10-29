@@ -85,7 +85,7 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
       />
 
       <DateTimePicker
-        titleIOS={props.label}
+        headerTextIOS={props.label}
         confirmTextIOS={config.date.labels.ok}
         cancelTextIOS={config.date.labels.cancel}
         locale={config.date.pickerLocale}

@@ -31,7 +31,7 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
 
   const children = props._onPress ? (
     <TouchableOpacity style={styles.touchable} onPress={props._onPress}>
-      {props.children}
+      <View pointerEvents='none'>{props.children}</View>
     </TouchableOpacity>
   ) : (
     props.children
@@ -52,7 +52,7 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
 
           {!!props.label && (
             <Label {...(config.labelProps || {})} {...(props.LabelProps || {})} onPress={props._onLabelPress}>
-              {props.label}
+              {props.label} {props._onPress ? 'on' : 'no'}
             </Label>
           )}
 

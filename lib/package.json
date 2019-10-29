@@ -11,7 +11,7 @@
     "validation",
     "mobile"
   ],
-  "version": "2.6.3",
+  "version": "2.6.4",
   "main": "./index.js",
   "types": "./index.d.ts",
   "license": "MIT",
@@ -36,7 +36,7 @@
     "@react-form-fields/core": "^2.5.1",
     "date-fns": ">=2.0.0",
     "native-base": ">=2.0.0",
-    "react-native-modal-datetime-picker": "^7.6.0",
+    "react-native-modal-datetime-picker": "^8.0.1",
     "tslib": ">=1.10.0",
     "uuid": ">=3.0.0"
   },
@@ -44,23 +44,23 @@
     "native-base": ">=2.0.0"
   },
   "devDependencies": {
-    "@types/node": "12.7.11",
+    "@types/node": "12.11.7",
     "@types/prop-types": "15.7.3",
-    "@types/react": "16.9.5",
-    "@types/react-native": "0.60.19",
+    "@types/react": "16.9.11",
+    "@types/react-native": "0.60.22",
     "@types/uuid": "3.4.5",
-    "@typescript-eslint/eslint-plugin": "2.3.3",
-    "@typescript-eslint/parser": "2.3.3",
+    "@typescript-eslint/eslint-plugin": "2.6.0",
+    "@typescript-eslint/parser": "2.6.0",
     "concurrently": "5.0.0",
-    "eslint": "6.5.1",
-    "eslint-config-prettier": "6.4.0",
+    "eslint": "6.6.0",
+    "eslint-config-prettier": "6.5.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-react": "7.16.0",
-    "eslint-plugin-react-hooks": "2.1.2",
-    "husky": "3.0.8",
+    "eslint-plugin-react-hooks": "2.2.0",
+    "husky": "3.0.9",
     "prettier": "1.18.2",
-    "react": "16.10.2",
+    "react": "16.11.0",
     "react-native": "0.61.2",
-    "typescript": "3.6.3"
+    "typescript": "3.6.4"
   }
 }
