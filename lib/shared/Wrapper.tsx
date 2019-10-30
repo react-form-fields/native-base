@@ -52,7 +52,7 @@ const Wrapper = React.memo((props: IWrapperProps & IErrorMessageProps & { readon
 
           {!!props.label && (
             <Label {...(config.labelProps || {})} {...(props.LabelProps || {})} onPress={props._onLabelPress}>
-              {props.label} {props._onPress ? 'on' : 'no'}
+              {props.label}
             </Label>
           )}
 
