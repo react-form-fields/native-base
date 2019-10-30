@@ -11,7 +11,7 @@
     "validation",
     "mobile"
   ],
-  "version": "2.6.4",
+  "version": "2.6.5",
   "main": "./index.js",
   "types": "./index.d.ts",
   "license": "MIT",
