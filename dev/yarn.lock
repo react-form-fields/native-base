@@ -868,15 +868,15 @@
     uuid ">=3.0.0"
     validatorjs "^3.15.1"
 
-"@react-form-fields/native-base@2.6.3":
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/native-base/-/native-base-2.6.3.tgz#2a3fa6937a959fab34dcc0f54ed70ae8a15f1637"
-  integrity sha512-GthwK2bZdHgenRB1gibcYdhgJDzk3gISH75F6kKdmPPNM5Iyv47Ty/6KdRSjDeLpRrRY2OD40j2w0oEpcir3dQ==
+"@react-form-fields/native-base@2.6.5":
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/native-base/-/native-base-2.6.5.tgz#e4482d0f7f18658f3b56c799dc283f640a4529fa"
+  integrity sha512-3WWAZKmbdXDww3R0DJJe/Tz82auCSHtyZr2pZ6M37og71orJ55byAdcAs/zR32iKdXjDhwWZuNHjfgZhVkQFrA==
   dependencies:
     "@react-form-fields/core" "^2.5.1"
     date-fns ">=2.0.0"
     native-base ">=2.0.0"
-    react-native-modal-datetime-picker "^7.6.0"
+    react-native-modal-datetime-picker "^8.0.1"
     tslib ">=1.10.0"
     uuid ">=3.0.0"
 
@@ -919,6 +919,13 @@
     ws "^1.1.0"
     xcode "^2.0.0"
     xmldoc "^0.4.0"
+
+"@react-native-community/datetimepicker@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-2.1.0.tgz#4e3413462cbbe5c48fab6cebd422835031cdf7b9"
+  integrity sha512-InktUrx0/4JTy1YsgswljgID7oB3L8wkFobRhnLGWPExSsNHeecGW2/nBP31ZaOPHcjVWhpOQMZt0zDpKfGE/Q==
+  dependencies:
+    invariant "^2.2.4"
 
 "@types/fbemitter@^2.0.32":
   version "2.0.32"
@@ -4440,13 +4447,6 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
   integrity sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
 
-react-native-animatable@^1.3.1:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.2.tgz#4783ee1a73dc98815aef234ce6b819f80bfe7d80"
-  integrity sha512-rmah3KQ63ft8DxkzFUwJSuZeq+oSYwldoGF4DTOR5WM2WR5wiWLgBAtrAHlI3Di3by323uOR21s+MlqPcHz2Kw==
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-branch@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-3.0.1.tgz#5b07b61cbd290168cd3c3662e017ebe0f356d2ca"
@@ -4480,21 +4480,12 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-modal-datetime-picker@^7.6.0:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-7.6.0.tgz#6818f221010d0f61a6396a956b303fee65726fee"
-  integrity sha512-p7MquU/oAFO+S7+d1IYYK/8b9mroZXuStK2HA2FxX3e8O1YeNyq2Bggr4KPr6D0saJ/6iGzq8pFwN0YfaCW9+A==
+react-native-modal-datetime-picker@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-8.0.1.tgz#51860d588f5e814663253ef25ed1f6e8bbfc0f27"
+  integrity sha512-w+OIoztz95tj8NFQ2a8gkTodmiIpXDs8jCFIcmaGP3LViEZOKaoCK27Zbg7RwXZOILT9wHe5cd3gFDxDctVlQQ==
   dependencies:
     prop-types "^15.7.2"
-    react-native-modal "^11.0.2"
-
-react-native-modal@^11.0.2:
-  version "11.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.4.0.tgz#29f2fd241aed864f3c7ce25a941498ebe2ab217a"
-  integrity sha512-5AsvppV843bGBOgRotORhb0OJLAf3EOueJ1Z0a9vH/ZO3E2KdnGpxgJFRWx2SZhgUmQ65YP392rsMZl/NYwdIw==
-  dependencies:
-    prop-types "^15.6.2"
-    react-native-animatable "^1.3.1"
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"

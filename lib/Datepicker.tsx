@@ -46,9 +46,10 @@ const FieldDatepicker = React.memo((props: IFieldDatepickerProps) => {
 
   const handleConfirm = React.useCallback(
     (value: Date) => {
+      setShowPicker(false);
+
       config.validationOn === 'onChange' && fieldTextRef.current.setDirty(true);
       onChange(value);
-      setShowPicker(false);
     },
     [onChange, setShowPicker, fieldTextRef, config.validationOn]
   );
